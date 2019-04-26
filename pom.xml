@@ -12,7 +12,7 @@
 	<artifactId>etakeout</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>etakeout</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Takeout project with Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
