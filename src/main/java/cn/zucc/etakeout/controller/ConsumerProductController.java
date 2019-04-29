@@ -22,12 +22,14 @@ import java.util.List;
 @RequestMapping("/consumer/product")
 public class ConsumerProductController {
 
+    // 自动装配 前提是加了 @Service
     @Autowired
     private InfoService infoService;
 
     @Autowired
     private CategoryService categoryService;
 
+    // 映射相对路径 '/consumer/product/list'
     @GetMapping("/list")
     public RootData list(){
 

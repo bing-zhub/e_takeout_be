@@ -2,6 +2,12 @@ package cn.zucc.etakeout.data;
 
 import lombok.Data;
 
+/**
+ * @Date ：Created in 2019/4/29 23:42
+ * @Description：返回数据根结构
+ * @Created By：bing
+ */
+
 @Data
 public class RootData<T> {
 
