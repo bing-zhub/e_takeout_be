@@ -1,28 +1,21 @@
-package cn.zucc.etakeout.bean;
+package cn.zucc.etakeout.dto;
 
+import cn.zucc.etakeout.bean.OrderDetail;
 import cn.zucc.etakeout.mappings.OrderStatusMapping;
 import cn.zucc.etakeout.mappings.PayStatusMapping;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 /**
- * @Date ：Created in 2019/4/30 20:46
- * @Description：订单主表
+ * @Date ：Created in 2019/4/30 21:31
+ * @Description：DataTransferObject
  * @Created By：bing
  */
-@Entity
 @Data
-@DynamicUpdate
-public class OrderMaster {
-
-    @Id
+public class OrderDTO {
     private String orderId;
 
     private String consumerName;
@@ -43,4 +36,5 @@ public class OrderMaster {
 
     private Date updateTime;
 
+    private List<OrderDetail> orderDetails;
 }

@@ -2,8 +2,9 @@ package cn.zucc.etakeout.service.impl;
 
 import cn.zucc.etakeout.bean.ProductInfo;
 import cn.zucc.etakeout.dao.ProductInfoDAO;
+import cn.zucc.etakeout.dto.CartDTO;
 import cn.zucc.etakeout.mappings.ProductStatusMapping;
-import cn.zucc.etakeout.service.InfoService;
+import cn.zucc.etakeout.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class InfoServiceImpl implements InfoService{
+public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Autowired
     ProductInfoDAO productInfoDAO;
@@ -35,5 +36,15 @@ public class InfoServiceImpl implements InfoService{
     @Override
     public ProductInfo save(ProductInfo productInfo) {
         return productInfoDAO.save(productInfo);
+    }
+
+    @Override
+    public void increaseStock(List<CartDTO> cartDTOList) {
+        // TODO
+    }
+
+    @Override
+    public void decreaseStock(List<CartDTO> cartDTOList) {
+        // TODO
     }
 }

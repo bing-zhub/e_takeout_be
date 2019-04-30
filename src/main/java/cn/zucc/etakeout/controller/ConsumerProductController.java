@@ -6,7 +6,7 @@ import cn.zucc.etakeout.data.ProductData;
 import cn.zucc.etakeout.data.ProductInfoData;
 import cn.zucc.etakeout.data.RootData;
 import cn.zucc.etakeout.service.CategoryService;
-import cn.zucc.etakeout.service.InfoService;
+import cn.zucc.etakeout.service.ProductInfoService;
 import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class ConsumerProductController {
 
     // 自动装配 前提是加了 @Service
     @Autowired
-    private InfoService infoService;
+    private ProductInfoService productInfoService;
 
     @Autowired
     private CategoryService categoryService;
@@ -34,7 +33,7 @@ public class ConsumerProductController {
     public RootData list(){
 
         // 查询所有上架商品
-        List<ProductInfo> productInfoList = infoService.findUpAll();
+        List<ProductInfo> productInfoList = productInfoService.findUpAll();
 
         // 将上架商品的类目名称添加添加到列表
         List<Integer> categoryTypeList = new LinkedList<>();
