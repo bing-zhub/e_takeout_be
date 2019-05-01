@@ -18,6 +18,8 @@ import java.util.List;
 public class OrderDTO {
     private String orderId;
 
+    private String sellerId;
+
     private String consumerName;
 
     private String consumerPhone;

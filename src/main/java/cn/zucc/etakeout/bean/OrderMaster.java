@@ -4,8 +4,13 @@ import cn.zucc.etakeout.mappings.OrderStatusMapping;
 import cn.zucc.etakeout.mappings.PayStatusMapping;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
@@ -20,10 +25,13 @@ import java.util.List;
 @Entity
 @Data
 @DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
 public class OrderMaster {
 
     @Id
     private String orderId;
+
+    private String sellerId;
 
     private String consumerName;
 
@@ -39,8 +47,10 @@ public class OrderMaster {
 
     private Integer payStatus = PayStatusMapping.PENDING.getCode();
 
+    @CreatedDate
     private Date createTime;
 
+    @LastModifiedDate
     private Date updateTime;
 
 }

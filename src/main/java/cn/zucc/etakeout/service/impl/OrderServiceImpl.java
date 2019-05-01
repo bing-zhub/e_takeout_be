@@ -8,6 +8,8 @@ import cn.zucc.etakeout.dao.OrderMasterDAO;
 import cn.zucc.etakeout.dto.CartDTO;
 import cn.zucc.etakeout.dto.OrderDTO;
 import cn.zucc.etakeout.exception.SellException;
+import cn.zucc.etakeout.mappings.OrderStatusMapping;
+import cn.zucc.etakeout.mappings.PayStatusMapping;
 import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.ProductInfoService;
 import cn.zucc.etakeout.service.OrderService;
@@ -16,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -27,6 +30,7 @@ import java.util.List;
  * @Description：OrderService实现类
  * @Created By：bing
  */
+@Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -55,13 +59,13 @@ public class OrderServiceImpl implements OrderService {
             }
 
             // 计算总价
-            BigDecimal multiply = orderDetail.getProductPrice().multiply(BigDecimal.valueOf(orderDetail.getProductQuantity()));
+            BigDecimal multiply = productInfo.getProductPrice().multiply(BigDecimal.valueOf(orderDetail.getProductQuantity()));
             totalPrice =  totalPrice.add(multiply);
 
             // orderDetail
+            BeanUtils.copyProperties(productInfo, orderDetail);
             orderDetail.setDetailId(ValueUtil.genUniqueKey());
             orderDetail.setOrderId(orderId);
-            BeanUtils.copyProperties(productInfo, orderDetail);
             orderDetailDAO.save(orderDetail);
 
             CartDTO cartDTO = new CartDTO(orderDetail.getProductId(), orderDetail.getProductQuantity());
@@ -71,9 +75,11 @@ public class OrderServiceImpl implements OrderService {
 
         // orderMaster
         OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(orderDTO, orderMaster);
         orderMaster.setOrderId(orderId);
         orderMaster.setOrderAmount(totalPrice);
-        BeanUtils.copyProperties(orderDTO, orderMaster);
+        orderMaster.setOrderStatus(OrderStatusMapping.NEW.getCode());
+        orderMaster.setPayStatus(PayStatusMapping.PENDING.getCode());
         orderMasterDAO.save(orderMaster);
 
         // 去库存
