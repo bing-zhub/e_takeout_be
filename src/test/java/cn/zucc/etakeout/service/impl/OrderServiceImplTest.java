@@ -2,10 +2,13 @@ package cn.zucc.etakeout.service.impl;
 
 import cn.zucc.etakeout.bean.OrderDetail;
 import cn.zucc.etakeout.dto.OrderDTO;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.LinkedList;
@@ -50,14 +53,22 @@ public class OrderServiceImplTest {
 
     @Test
     public void findOne() {
+        OrderDTO one = orderService.findOne("15567143211395073723");
+        Assert.assertNotNull(one);
     }
 
     @Test
     public void findList() {
+        PageRequest request = new PageRequest(0, 2);
+        Page<OrderDTO> list = orderService.findList("1231", request);
+        Assert.assertNotNull(list);
     }
 
     @Test
     public void cancel() {
+        OrderDTO orderDTO = orderService.findOne("15567143211395073723");
+        OrderDTO result = orderService.cancel(orderDTO);
+        Assert.assertNotNull(result);
     }
 
     @Test
