@@ -1,5 +1,6 @@
 package cn.zucc.etakeout.controller;
 
+import cn.zucc.etakeout.bean.User;
 import cn.zucc.etakeout.data.RootData;
 import cn.zucc.etakeout.form.LoginForm;
 import cn.zucc.etakeout.util.ResultUtil;
@@ -25,20 +26,17 @@ public class UserController {
     // 接收json数据
     @RequestMapping("/login")
     public RootData login(@RequestBody LoginForm loginForm){
-        System.out.println(loginForm.getUsername() + " " + loginForm.getPassword());
         return ResultUtil.success("admin-token");
     }
 
     @RequestMapping("/info")
     public RootData info(){
-        JsonObject jsonObject = new JsonObject();
-        JsonArray roles = new JsonArray();
-        roles.add("admin");
-        jsonObject.add("roles",roles);
-        jsonObject.addProperty("introduction", "I am a super administrator" );
-        jsonObject.addProperty("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        jsonObject.addProperty("name", "Super Admin");
-        return ResultUtil.success(jsonObject);
+        User user = new User();
+        user.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        user.setIntroduction("I am a super administrator");
+        user.setName("Super Admin");
+        user.setRole("[admin]");
+        return ResultUtil.success(user);
     }
 
     @RequestMapping("/logout")
