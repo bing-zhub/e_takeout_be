@@ -147,12 +147,43 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderDTO finish(OrderDTO orderDTO) {
-        return null;
+        // 判断订单状态
+        if(!orderDTO.getOrderStatus().equals(OrderStatusMapping.NEW.getCode())){
+            throw new SellException(ResultMapping.ORDER_CANNOT_FINISH);
+        }
+        // 修改订单状态
+        orderDTO.setOrderStatus(OrderStatusMapping.FINISHED.getCode());
+        OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(orderDTO, orderMaster);
+        OrderMaster save = orderMasterDAO.save(orderMaster);
+        if(save==null){
+            throw new SellException(ResultMapping.ORDER_STATUS_UPDATE_FAILED);
+        }
+        return orderDTO;
     }
 
     @Override
+    @Transactional
     public OrderDTO paid(OrderDTO orderDTO) {
-        return null;
+        // 判断订单状态
+        if(!orderDTO.getOrderStatus().equals(OrderStatusMapping.NEW.getCode())){
+            throw new SellException(ResultMapping.ORDER_CANNOT_FINISH);
+        }
+        // 判断支付状态
+        if (!orderDTO.getPayStatus().equals(PayStatusMapping.SUCCESS.getCode())){
+            throw new SellException(ResultMapping.PAY_STATUS_NOT_CORRECT);
+        }
+
+        // 修改支付状态
+        orderDTO.setPayStatus(PayStatusMapping.SUCCESS.getCode());
+        OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(orderDTO, orderMaster);
+        OrderMaster save = orderMasterDAO.save(orderMaster);
+        if(save==null){
+            throw new SellException(ResultMapping.ORDER_STATUS_UPDATE_FAILED);
+        }
+        return orderDTO;
     }
 }
