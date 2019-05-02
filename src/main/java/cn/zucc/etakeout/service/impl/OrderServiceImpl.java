@@ -82,8 +82,8 @@ public class OrderServiceImpl implements OrderService {
         orderMaster.setOrderAmount(totalPrice);
         orderMaster.setOrderStatus(OrderStatusMapping.NEW.getCode());
         orderMaster.setPayStatus(PayStatusMapping.PENDING.getCode());
-        orderMasterDAO.save(orderMaster);
-
+        OrderMaster savedOrder =  orderMasterDAO.save(orderMaster);
+        BeanUtils.copyProperties(savedOrder, orderDTO);
         // 去库存
         productInfoService.decreaseStock(cartDTOList);
 
