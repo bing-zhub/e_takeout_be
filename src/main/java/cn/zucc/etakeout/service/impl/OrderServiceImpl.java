@@ -119,7 +119,7 @@ public class OrderServiceImpl implements OrderService {
 
         // 判断订单状态
         if(!orderDTO.getOrderStatus().equals(OrderStatusMapping.NEW.getCode())) {
-            throw new SellException(ResultMapping.ORDER_CANNOT_CANCEL);
+            throw new SellException(ResultMapping.ORDER_UNAVAILABLE);
         }
 
         // 修改订单状态
@@ -151,7 +151,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDTO finish(OrderDTO orderDTO) {
         // 判断订单状态
         if(!orderDTO.getOrderStatus().equals(OrderStatusMapping.NEW.getCode())){
-            throw new SellException(ResultMapping.ORDER_CANNOT_FINISH);
+            throw new SellException(ResultMapping.ORDER_UNAVAILABLE);
         }
         // 修改订单状态
         orderDTO.setOrderStatus(OrderStatusMapping.FINISHED.getCode());
@@ -166,13 +166,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderDTO paid(OrderDTO orderDTO) {
+    public OrderDTO pay(OrderDTO orderDTO) {
         // 判断订单状态
         if(!orderDTO.getOrderStatus().equals(OrderStatusMapping.NEW.getCode())){
-            throw new SellException(ResultMapping.ORDER_CANNOT_FINISH);
+            throw new SellException(ResultMapping.ORDER_UNAVAILABLE);
         }
         // 判断支付状态
-        if (!orderDTO.getPayStatus().equals(PayStatusMapping.SUCCESS.getCode())){
+        if (!orderDTO.getPayStatus().equals(PayStatusMapping.PENDING.getCode())){
             throw new SellException(ResultMapping.PAY_STATUS_NOT_CORRECT);
         }
 
@@ -186,4 +186,6 @@ public class OrderServiceImpl implements OrderService {
         }
         return orderDTO;
     }
+
+
 }

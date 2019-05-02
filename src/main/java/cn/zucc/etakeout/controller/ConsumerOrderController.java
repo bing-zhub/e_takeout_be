@@ -4,6 +4,7 @@ import cn.zucc.etakeout.data.RootData;
 import cn.zucc.etakeout.dto.OrderDTO;
 import cn.zucc.etakeout.exception.SellException;
 import cn.zucc.etakeout.form.OrderCreateForm;
+import cn.zucc.etakeout.form.OrderDetailQueryForm;
 import cn.zucc.etakeout.form.OrderQueryForm;
 import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.OrderService;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -65,8 +65,53 @@ public class ConsumerOrderController {
     }
 
     // 订单详情
+    @GetMapping("/detail")
+    public RootData<OrderDTO> detail(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+        OrderDTO orderDTO =  orderService.findOne(queryForm.getOrderId());
+        if(!queryForm.getOpenId().equals(orderDTO.getConsumerOpenid())){
+            throw new SellException(ResultMapping.PERMISSION_DENIED);
+        }
+        return ResultUtil.success(orderDTO);
+    }
 
     // 取消订单
+    @GetMapping("/cancel")
+    public RootData cancel(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+        OrderDTO orderDTO = orderService.findOne(queryForm.getOrderId());
+        if(!queryForm.getOpenId().equals(orderDTO.getConsumerOpenid())){
+            throw new SellException(ResultMapping.PERMISSION_DENIED);
+        }
+        return ResultUtil.success(orderService.cancel(orderDTO));
+    }
 
     // 支付订单
+    @GetMapping("/pay")
+    public RootData pay(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+        OrderDTO orderDTO = orderService.findOne(queryForm.getOrderId());
+        if(!queryForm.getOpenId().equals(orderDTO.getConsumerOpenid())){
+            throw new SellException(ResultMapping.PERMISSION_DENIED);
+        }
+        return ResultUtil.success(orderService.pay(orderDTO));
+    }
+
+    @GetMapping("/finish")
+    public RootData finish(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+        OrderDTO orderDTO = orderService.findOne(queryForm.getOrderId());
+        if(!queryForm.getOpenId().equals(orderDTO.getConsumerOpenid())){
+            throw new SellException(ResultMapping.PERMISSION_DENIED);
+        }
+        return ResultUtil.success(orderService.finish(orderDTO));
+    }
 }

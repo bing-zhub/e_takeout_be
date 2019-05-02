@@ -3,6 +3,7 @@ package cn.zucc.etakeout.dto;
 import cn.zucc.etakeout.bean.OrderDetail;
 import cn.zucc.etakeout.mappings.OrderStatusMapping;
 import cn.zucc.etakeout.mappings.PayStatusMapping;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -15,6 +16,8 @@ import java.util.List;
  * @Created By：bing
  */
 @Data
+// 如果某一属性为空 不返回
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
     private String orderId;
 
