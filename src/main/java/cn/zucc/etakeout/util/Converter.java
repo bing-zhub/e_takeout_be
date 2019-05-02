@@ -2,7 +2,7 @@ package cn.zucc.etakeout.util;
 
 import cn.zucc.etakeout.bean.OrderMaster;
 import cn.zucc.etakeout.dto.OrderDTO;
-import cn.zucc.etakeout.form.OrderForm;
+import cn.zucc.etakeout.form.OrderCreateForm;
 import org.springframework.beans.BeanUtils;
 
 import java.util.LinkedList;
@@ -38,7 +38,7 @@ public class Converter {
 //        }
 //    ]
 //    }
-    public static OrderDTO convert(OrderForm orderForm){
+    public static OrderDTO convert(OrderCreateForm orderForm){
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setSellerId(orderForm.getSellerId());
         orderDTO.setConsumerName(orderForm.getName());

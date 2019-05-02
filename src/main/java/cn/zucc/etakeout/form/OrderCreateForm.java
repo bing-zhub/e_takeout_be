@@ -12,7 +12,7 @@ import java.util.List;
  * @Created By：bing
  */
 @Data
-public class OrderForm {
+public class OrderCreateForm {
 
     @NotEmpty(message = "卖家标识")
     private String sellerId;
