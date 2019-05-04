@@ -5,4 +5,4 @@
 - `/consumer/order/list` 
 - `/consumer/order/cancel`
 - `/consumer/order/pay`
-- `/consumer/order/finishi`
+- `/consumer/order/finish`
