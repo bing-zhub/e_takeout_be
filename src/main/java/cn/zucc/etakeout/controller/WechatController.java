@@ -28,7 +28,6 @@ public class WechatController {
         String result =  wxMpService.oauth2buildAuthorizationUrl(url,
                 WxConsts.OAUTH2_SCOPE_USER_INFO,
                 URLEncoder.encode(returnUrl));
-        System.out.println(result);
         return "redirect:"+ result;
     }
 
@@ -38,13 +37,11 @@ public class WechatController {
         try {
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken =  wxMpService.oauth2getAccessToken(code);
             openid =  wxMpOAuth2AccessToken.getOpenId();
-
-            System.out.println(openid);
         } catch (WxErrorException e) {
             System.out.println(e.getError().getErrorMsg());
             e.printStackTrace();
         }
-        return "redirect:"+returnUrl+"&openid="+openid;
+        return "redirect:"+returnUrl+"?openid="+openid;
     }
 
 }

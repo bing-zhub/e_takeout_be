@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class OrderCreateForm {
 
-    @NotEmpty(message = "卖家标识")
+    @NotEmpty(message = "卖家标识必填")
     private String sellerId;
 
     @NotEmpty(message = "姓名必填")
