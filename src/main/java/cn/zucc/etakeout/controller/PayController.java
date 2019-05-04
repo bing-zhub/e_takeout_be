@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -37,13 +38,8 @@ public class PayController {
     private PayService payService;
 
     @GetMapping("/create")
-    public ModelAndView create(@RequestBody @Valid PayCreateForm form, BindingResult bindingResult,
+    public ModelAndView create(@RequestParam("orderId") String orderId, @RequestParam("returnUrl") String returnUrl,
                                Map<String, Object> map){
-        if(bindingResult.hasErrors()){
-            throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
-        }
-        String orderId = form.getOrderId();
-        String returnUrl = form.getReturnUrl();
 
         OrderDTO order = orderService.findOne(orderId);
         if(order==null){
