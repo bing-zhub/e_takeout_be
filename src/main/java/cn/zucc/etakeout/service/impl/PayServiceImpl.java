@@ -23,7 +23,7 @@ public class PayServiceImpl implements PayService{
     private BestPayServiceImpl bestPayService;
 
     @Override
-    public void create(OrderDTO orderDTO) {
+    public PayResponse create(OrderDTO orderDTO) {
         PayRequest payRequest = new PayRequest();
         payRequest.setOpenid(orderDTO.getConsumerOpenid());
         payRequest.setOrderAmount(orderDTO.getOrderAmount().doubleValue());
@@ -33,5 +33,6 @@ public class PayServiceImpl implements PayService{
         System.out.println(payRequest);
         PayResponse pay = bestPayService.pay((payRequest));
         System.out.println(pay);
+        return pay;
     }
 }
