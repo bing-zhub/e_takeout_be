@@ -17,8 +17,10 @@ public enum ResultMapping {
     PAY_STATUS_NOT_CORRECT(18, "支付状态不正确"),
     CART_IS_EMPTY(19, "购物车为空"),
     PERMISSION_DENIED(20, "无此权限"),
-    FAILED(1, "失败");
-
+    FAILED(1, "失败"),
+    REGIST_FAILED(21,"用户已存在"),
+    NO_USER(22,"用户不存在"),
+    UNCOREECT(23,"密码错误");
     private Integer code;
 
     private String message;
