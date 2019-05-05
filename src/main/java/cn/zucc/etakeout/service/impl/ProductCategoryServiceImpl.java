@@ -19,13 +19,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     public ProductCategoryService addProductCategoryService(String categoryName, Integer categoryType) {
-        ProductCategory one=productCategoryDAO.findOne(categoryType);
-        if (one==null){
-            List<ProductCategory> all=productCategoryDAO.findAll();
-            for (ProductCategory one:)
-            List<Integer> categoryid=
-        }
-
+//        ProductCategory one=productCategoryDAO.findOne(categoryType);
+//        if (one==null){
+//            List<ProductCategory> all=productCategoryDAO.findAll();
+//            for (ProductCategory one:)
+//            List<Integer> categoryid=
+//        }
+        return null;
     }
 
     @Override
