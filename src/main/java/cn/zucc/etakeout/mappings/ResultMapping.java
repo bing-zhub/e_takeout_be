@@ -17,6 +17,7 @@ public enum ResultMapping {
     PAY_STATUS_NOT_CORRECT(18, "支付状态不正确"),
     CART_IS_EMPTY(19, "购物车为空"),
     PERMISSION_DENIED(20, "无此权限"),
+    AMOUNT_NOT_MATCH(21, "订单金额不一致"),
     FAILED(1, "失败"),
     REGIST_FAILED(21,"用户已存在"),
     NO_USER(22,"用户不存在"),

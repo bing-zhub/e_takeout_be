@@ -15,4 +15,8 @@ public class ValueUtil {
         Long timestamp = System.currentTimeMillis();
         return timestamp + String.valueOf(randomValue);
     }
+
+    public static boolean equals(Double d1, Double d2) {
+        return Math.abs(d1 - d2) < 0.001;
+    }
 }

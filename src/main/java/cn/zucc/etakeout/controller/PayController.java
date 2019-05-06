@@ -8,9 +8,7 @@ import cn.zucc.etakeout.service.PayService;
 import com.lly835.bestpay.model.PayResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -44,6 +42,14 @@ public class PayController {
         map.put("returnUrl", returnUrl);
 
         return new ModelAndView("pay/create", map);
+    }
+
+    @PostMapping("/notify")
+    public ModelAndView notify(@RequestBody String notifyData) {
+        payService.notify(notifyData);
+
+        //告知微信处理 完成 结束异步通知
+        return new ModelAndView("pay/success");
     }
 
 }

@@ -1,12 +1,14 @@
 package cn.zucc.etakeout.service.impl;
 
 import cn.zucc.etakeout.dto.OrderDTO;
+import cn.zucc.etakeout.exception.SellException;
+import cn.zucc.etakeout.mappings.ResultMapping;
+import cn.zucc.etakeout.service.OrderService;
 import cn.zucc.etakeout.service.PayService;
-import com.lly835.bestpay.config.WxPayH5Config;
+import cn.zucc.etakeout.util.ValueUtil;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
-import com.lly835.bestpay.service.BestPayService;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class PayServiceImpl implements PayService{
     @Autowired
     private BestPayServiceImpl bestPayService;
 
+    @Autowired
+    private OrderService orderService;
+
     @Override
     public PayResponse create(OrderDTO orderDTO) {
         PayRequest payRequest = new PayRequest();
@@ -34,5 +39,22 @@ public class PayServiceImpl implements PayService{
         PayResponse pay = bestPayService.pay((payRequest));
         System.out.println(pay);
         return pay;
+    }
+
+    @Override
+    public PayResponse notify(String notifyData) {
+        PayResponse payResponse = bestPayService.asyncNotify(notifyData);
+        OrderDTO order = orderService.findOne(payResponse.getOrderId());
+        if (order == null) {
+            throw new SellException(ResultMapping.ORDER_NOT_EXIST);
+        }
+
+        // 金额校验
+        boolean moneyMatch = ValueUtil.equals(order.getOrderAmount().doubleValue(), payResponse.getOrderAmount());
+        if (!moneyMatch) {
+            throw new SellException(ResultMapping.AMOUNT_NOT_MATCH);
+        }
+        orderService.pay(order);
+        return payResponse;
     }
 }

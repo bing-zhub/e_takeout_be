@@ -22,14 +22,24 @@ public class ProductInfo {
 
     private BigDecimal productPrice;
 
-    private Integer productStock;
-
     private String productDescription;
 
+    private Integer productSellCount;
+
+    private BigDecimal productOldPrice;
+
+    private Integer productRating;
+
     private String productIcon;
+
+    private String productImages;
+
+    private Integer productStock;
 
     private Integer productStatus;
 
     private Integer categoryType;
+
+    private BigDecimal score;
 
 }
