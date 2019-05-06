@@ -9,6 +9,8 @@ import cn.zucc.etakeout.util.ValueUtil;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
+import com.lly835.bestpay.model.RefundRequest;
+import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,5 +58,14 @@ public class PayServiceImpl implements PayService{
         }
         orderService.pay(order);
         return payResponse;
+    }
+
+    @Override
+    public RefundResponse refund(OrderDTO orderDTO) {
+        RefundRequest refundRequest = new RefundRequest();
+        refundRequest.setOrderId(orderDTO.getOrderId());
+        refundRequest.setOrderAmount(orderDTO.getOrderAmount().doubleValue());
+        refundRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
+        return bestPayService.refund(refundRequest);
     }
 }

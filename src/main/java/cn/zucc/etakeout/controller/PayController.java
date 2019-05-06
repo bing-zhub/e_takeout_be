@@ -48,7 +48,7 @@ public class PayController {
     public ModelAndView notify(@RequestBody String notifyData) {
         payService.notify(notifyData);
 
-        //告知微信处理 完成 结束异步通知
+        //告知微信处理完成 结束异步通知 否则notify会一直有消息进来
         return new ModelAndView("pay/success");
     }
 
