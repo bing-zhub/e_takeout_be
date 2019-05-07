@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Data
 public class ProductInfo {
     @Id
-    private String productId;
+    private int productId;
 
     private String productName;
 

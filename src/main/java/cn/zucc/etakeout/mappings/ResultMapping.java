@@ -21,7 +21,11 @@ public enum ResultMapping {
     FAILED(1, "失败"),
     REGIST_FAILED(21,"用户已存在"),
     NO_USER(22,"用户不存在"),
-    UNCOREECT(23,"密码错误");
+    UNCOREECT(23,"密码错误"),
+    CATRGORY_NAME_EXIT(25,"类别名称已经存在"),
+    CATRGORY_NAME_NO(26,"类别名称不存在"),
+    CATRGORY_TYPE_EXIT(24,"类别编号已经存在"),
+    CATRGORY_TYPE_NO(27,"类别编号不存在");
     private Integer code;
 
     private String message;
