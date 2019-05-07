@@ -11,8 +11,9 @@ import cn.zucc.etakeout.exception.SellException;
 import cn.zucc.etakeout.mappings.OrderStatusMapping;
 import cn.zucc.etakeout.mappings.PayStatusMapping;
 import cn.zucc.etakeout.mappings.ResultMapping;
-import cn.zucc.etakeout.service.ProductInfoService;
 import cn.zucc.etakeout.service.OrderService;
+import cn.zucc.etakeout.service.PayService;
+import cn.zucc.etakeout.service.ProductInfoService;
 import cn.zucc.etakeout.util.Converter;
 import cn.zucc.etakeout.util.ValueUtil;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +38,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductInfoService productInfoService;
+
+    @Autowired
+    private PayService payService;
 
     @Autowired
     private OrderDetailDAO orderDetailDAO;
@@ -140,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
 
         // 如果已支付 退款
         if(orderDTO.getPayStatus().equals(PayStatusMapping.SUCCESS.getCode())){
-            // TODO 处理退款
+            payService.refund(orderDTO);
         }
         orderDTO.setOrderStatus(OrderStatusMapping.CANCELED.getCode());
         return orderDTO;

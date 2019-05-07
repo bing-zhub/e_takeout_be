@@ -2,24 +2,15 @@ package cn.zucc.etakeout.controller;
 
 import cn.zucc.etakeout.dto.OrderDTO;
 import cn.zucc.etakeout.exception.SellException;
-import cn.zucc.etakeout.form.OrderQueryForm;
-import cn.zucc.etakeout.form.PayCreateForm;
 import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.OrderService;
 import cn.zucc.etakeout.service.PayService;
 import com.lly835.bestpay.model.PayResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.util.Map;
 
 /**
@@ -51,6 +42,14 @@ public class PayController {
         map.put("returnUrl", returnUrl);
 
         return new ModelAndView("pay/create", map);
+    }
+
+    @PostMapping("/notify")
+    public ModelAndView notify(@RequestBody String notifyData) {
+        payService.notify(notifyData);
+
+        //告知微信处理完成 结束异步通知 否则notify会一直有消息进来
+        return new ModelAndView("pay/success");
     }
 
 }

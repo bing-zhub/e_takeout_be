@@ -28,27 +28,19 @@ public class UserController {
         UserInfo userInfo = userService.find(loginForm.getUsername());
         if(userInfo ==null){
             throw new SellException(ResultMapping.NO_USER);
-        }
-        else{
+        } else {
             if (userInfo.getPwd().equals(loginForm.getPassword())){
                 return ResultUtil.success("admin-token");
-            }
-            else {
+            } else {
                 throw new SellException(ResultMapping.UNCOREECT);
             }
         }
-
-
-//        return ResultUtil.success("admin-token");
     }
     @PostMapping("/register")
     public RootData register(@RequestBody LoginForm loginForm){
         UserInfo userInfo =new UserInfo();
         userInfo.setUsername(loginForm.getUsername());
         userInfo.setPwd(loginForm.getPassword());
-
-        System.out.println(userInfo);
-
         userService.register(userInfo);
 
         return ResultUtil.success("admin-token");

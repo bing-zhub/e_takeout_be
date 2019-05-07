@@ -65,7 +65,7 @@ public class  ConsumerOrderController {
     }
 
     // 订单详情
-    @GetMapping("/detail")
+    @PostMapping("/detail")
     public RootData<OrderDTO> detail(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
