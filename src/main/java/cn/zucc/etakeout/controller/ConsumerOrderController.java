@@ -78,7 +78,7 @@ public class ConsumerOrderController {
     }
 
     // 取消订单
-    @GetMapping("/cancel")
+    @PostMapping("/cancel")
     public RootData cancel(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
