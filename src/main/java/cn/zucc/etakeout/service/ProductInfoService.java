@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ProductInfoService {
-    ProductInfo findOne(String productId);
+    ProductInfo findOne(int productId);
 
     List<ProductInfo> findUpAll();
 
@@ -19,4 +19,6 @@ public interface ProductInfoService {
     void increaseStock(List<CartDTO> cartDTOList);
 
     void decreaseStock(List<CartDTO> cartDTOList);
+
+    ProductInfo delete(int productInfoId);
 }

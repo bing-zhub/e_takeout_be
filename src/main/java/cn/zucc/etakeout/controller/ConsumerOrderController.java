@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/consumer/order")
-public class ConsumerOrderController {
+public class  ConsumerOrderController {
 
     @Autowired
     OrderService orderService;

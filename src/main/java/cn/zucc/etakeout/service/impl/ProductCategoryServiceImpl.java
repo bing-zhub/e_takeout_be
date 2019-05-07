@@ -1,16 +1,15 @@
 package cn.zucc.etakeout.service.impl;
 
 import cn.zucc.etakeout.bean.ProductCategory;
-import cn.zucc.etakeout.bean.ProductInfo;
 import cn.zucc.etakeout.dao.ProductCategoryDAO;
-import cn.zucc.etakeout.dto.CartDTO;
+import cn.zucc.etakeout.exception.SellException;
+import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.ProductCategoryService;
-import cn.zucc.etakeout.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
@@ -18,33 +17,83 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     private ProductCategoryDAO productCategoryDAO;
 
     @Override
-    public ProductCategoryService addProductCategoryService(String categoryName, Integer categoryType) {
-        ProductCategory one=productCategoryDAO.findOne(categoryType);
-        if (one==null){
-            List<ProductCategory> all=productCategoryDAO.findAll();
-            for (ProductCategory one:)
-            List<Integer> categoryid=
+    public ProductCategory addProductCategory(String categoryName, Integer categoryType) {
+        ProductCategory type=productCategoryDAO.findBYCategoryType(categoryType);
+        ProductCategory name=productCategoryDAO.findBYCategoryName(categoryName);
+        ProductCategory result=new ProductCategory();
+        if (type!=null){
+            throw new SellException(ResultMapping.CATRGORY_TYPE_EXIT);
+
         }
+        else if(name!=null){
+            throw new SellException(ResultMapping.CATRGORY_NAME_EXIT);
+        }
+        else{
+            List<ProductCategory> all=productCategoryDAO.findAll();
+            List<Integer> categoryid= new LinkedList<>();
+            for (ProductCategory pc:all) {
+                categoryid.add(pc.getCategoryId());
+            }
+
+            result.setCategoryId(Collections.max(categoryid)+1);
+            result.setCategoryName(categoryName);
+            result.setCategoryType(categoryType);
+            productCategoryDAO.save(result);
+
+        }
+        return result;
 
     }
 
     @Override
-    public void deleteProductCategory(Integer categoryType) {
+    public void deleteProductCategory(Integer categoryId) {
+        ProductCategory type=productCategoryDAO.findOne(categoryId);
 
+        if (type==null){
+            throw new SellException(ResultMapping.CATRGORY_TYPE_NO);
+        }
+        else{
+            productCategoryDAO.delete(type.getCategoryId());
+        }
     }
 
     @Override
-    public void changeCategoryName(Integer categoryType, String categoryName) {
-
+    public void changeCategoryName(Integer categoryId, String categoryName) {
+        ProductCategory type=productCategoryDAO.findOne(categoryId);
+        if (type==null){
+            throw new SellException(ResultMapping.CATRGORY_TYPE_NO);
+        }
+        else {
+            type.setCategoryName(categoryName);
+            productCategoryDAO.save(type);
+        }
     }
 
     @Override
-    public void changeCategoryType(Integer categoryType) {
-
+    public void changeCategoryType(Integer categoryId,Integer newCategoryType) {
+        ProductCategory type=productCategoryDAO.findOne(categoryId);
+        if (type==null){
+            throw new SellException(ResultMapping.CATRGORY_TYPE_NO);
+        }
+        else {
+            type.setCategoryType(newCategoryType);
+            productCategoryDAO.save(type);
+        }
     }
 
     @Override
-    public void getProductCategory(Integer categoryType) {
+    public ProductCategory getProductCategory(Integer categoryId) {
+        ProductCategory type=productCategoryDAO.findOne(categoryId);
+        if (type==null){
+            throw new SellException(ResultMapping.CATRGORY_TYPE_NO);
+        }
+        else {
+            return type;
+        }
+    }
 
+    @Override
+    public List<ProductCategory> getAllProductCategory() {
+        return productCategoryDAO.findAll();
     }
 }

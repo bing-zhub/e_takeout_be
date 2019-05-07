@@ -9,11 +9,11 @@ import lombok.Data;
  */
 @Data
 public class CartDTO {
-    private String productId;
+    private Integer productId;
 
     private Integer productQuantity;
 
-    public CartDTO(String productId, Integer productQuantity) {
+    public CartDTO(int productId, Integer productQuantity) {
         this.productId = productId;
         this.productQuantity = productQuantity;
     }

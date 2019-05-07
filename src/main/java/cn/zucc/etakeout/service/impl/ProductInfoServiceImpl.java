@@ -22,7 +22,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     ProductInfoDAO productInfoDAO;
 
     @Override
-    public ProductInfo findOne(String productId) {
+    public ProductInfo findOne(int productId) {
         return productInfoDAO.findOne(productId);
     }
 
@@ -30,12 +30,12 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     public List<ProductInfo> findUpAll() {
         return productInfoDAO.findByProductStatus(ProductStatusMapping.ONSALE.getCode());
     }
-
+    @Transactional
     @Override
     public Page<ProductInfo> findAll(Pageable pageable) {
         return productInfoDAO.findAll(pageable);
     }
-
+    @Transactional
     @Override
     public ProductInfo save(ProductInfo productInfo) {
         return productInfoDAO.save(productInfo);
@@ -74,4 +74,19 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             productInfoDAO.save(one);
         }
     }
+
+    @Override
+    @Transactional
+
+    public ProductInfo delete(int productInfoId) {
+        ProductInfo productInfo=productInfoDAO.findOne(productInfoId);
+        if (productInfo!=null){
+            productInfoDAO.delete(productInfo);
+        }
+        else {
+            throw new SellException(ResultMapping.PRODUCT_NOT_EXIST);
+        }
+        return productInfo;
+    }
+
 }
