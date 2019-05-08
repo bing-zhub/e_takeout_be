@@ -2,13 +2,12 @@ package cn.zucc.etakeout.controller;
 
 import cn.zucc.etakeout.bean.ProductCategory;
 import cn.zucc.etakeout.data.RootData;
+import cn.zucc.etakeout.form.CategoryCreateForm;
 import cn.zucc.etakeout.form.CategoryForm;
 import cn.zucc.etakeout.service.ProductCategoryService;
 import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,25 +21,26 @@ public class ProductCategoryController {
         List<ProductCategory> list=productCategoryService.getAllProductCategory();
         return ResultUtil.success(list);
     }
+
     @PostMapping("/create")
-    public RootData create(CategoryForm categoryForm){
+    public RootData create(@RequestBody CategoryCreateForm categoryForm){
         ProductCategory productCategory=productCategoryService.addProductCategory(categoryForm.getCategoryName(),categoryForm.getCategoryType());
         return ResultUtil.success(productCategory);
     }
-    @PostMapping("/cancel")
-    public RootData delete(CategoryForm categoryForm){
-        productCategoryService.deleteProductCategory(categoryForm.getCategoryType());
+
+    @PostMapping("/delete")
+    public RootData delete(@RequestBody CategoryForm categoryForm){
+        productCategoryService.deleteProductCategory(categoryForm.getCategoryId());
         return ResultUtil.success("success");
     }
-    @PostMapping("/change")
-    public RootData change(CategoryForm categoryForm){
+
+    @PostMapping("/update")
+    public RootData change(@RequestBody CategoryForm categoryForm){
+        
         ProductCategory productCategory=productCategoryService.getProductCategory(categoryForm.getCategoryId());
-        if (!productCategory.getCategoryName().equals(categoryForm.getCategoryName())){
-            productCategoryService.changeCategoryName(categoryForm.getCategoryType(),categoryForm.getCategoryName());
-        }
-        if (!productCategory.getCategoryType().equals(categoryForm.getCategoryName())){
-            productCategoryService.changeCategoryName(categoryForm.getCategoryType(),categoryForm.getCategoryName());
-        }
+        productCategory.setCategoryName(categoryForm.getCategoryName());
+        productCategory.setCategoryType(categoryForm.getCategoryType());
+        productCategory = productCategoryService.updateProductCategory(productCategory);
         return ResultUtil.success(productCategory);
     }
 

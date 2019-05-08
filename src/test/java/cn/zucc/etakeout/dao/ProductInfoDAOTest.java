@@ -22,7 +22,7 @@ public class ProductInfoDAOTest {
     @Test
     public void saveTest(){
         ProductInfo productInfo = new ProductInfo();
-        productInfo.setProductId("123");
+        productInfo.setProductId(123);
         productInfo.setProductName("西八");
         productInfo.setProductPrice(new BigDecimal(2.3));
         productInfo.setProductStock(10);

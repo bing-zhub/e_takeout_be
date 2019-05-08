@@ -114,6 +114,9 @@ public class OrderServiceImpl implements OrderService {
     public Page<OrderDTO> findList(String consumerOpenId, Pageable pageable) {
         Page<OrderMaster> orderMasterPage = orderMasterDAO.findByConsumerOpenid(consumerOpenId, pageable);
         List<OrderDTO> orderDTOList = Converter.convert(orderMasterPage.getContent());
+        for(OrderDTO orderDTO: orderDTOList){
+            orderDTO.setOrderDetails(findOne(orderDTO.getOrderId()).getOrderDetails());
+        }
         Page<OrderDTO> orderDTOPage = new PageImpl<OrderDTO>(orderDTOList, pageable, orderMasterPage.getTotalElements());
         return orderDTOPage;
     }
