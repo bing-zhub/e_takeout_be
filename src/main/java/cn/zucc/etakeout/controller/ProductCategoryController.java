@@ -6,6 +6,7 @@ import cn.zucc.etakeout.form.CategoryCreateForm;
 import cn.zucc.etakeout.form.CategoryForm;
 import cn.zucc.etakeout.service.ProductCategoryService;
 import cn.zucc.etakeout.util.ResultUtil;
+import org.simpleframework.xml.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,14 @@ public class ProductCategoryController {
         return ResultUtil.success(productCategory);
     }
 
+    @PostMapping("/import")
+    public RootData importCategories(@RequestBody List<CategoryCreateForm> categoryCreateForms){
+        for(CategoryCreateForm form: categoryCreateForms){
+            productCategoryService.addProductCategory(form.getCategoryName(), form.getCategoryType());
+        }
+        return ResultUtil.success(categoryCreateForms.size());
+    }
+
     @PostMapping("/delete")
     public RootData delete(@RequestBody CategoryForm categoryForm){
         productCategoryService.deleteProductCategory(categoryForm.getCategoryId());
@@ -36,7 +45,7 @@ public class ProductCategoryController {
 
     @PostMapping("/update")
     public RootData change(@RequestBody CategoryForm categoryForm){
-        
+
         ProductCategory productCategory=productCategoryService.getProductCategory(categoryForm.getCategoryId());
         productCategory.setCategoryName(categoryForm.getCategoryName());
         productCategory.setCategoryType(categoryForm.getCategoryType());
