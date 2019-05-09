@@ -53,7 +53,7 @@ public class  ConsumerOrderController {
     }
 
     // 订单列表
-    @GetMapping("/list")
+    @PostMapping("/list")
     public RootData<List<OrderDTO>> list(@RequestBody @Valid OrderQueryForm queryForm, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());

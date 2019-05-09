@@ -15,6 +15,7 @@ import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.Controller;
@@ -70,34 +71,23 @@ public class SellerProductController  {
 
         return ResultUtil.success(productDataList);
     }
-    @RequestMapping("/create")
-    public RootData addProduct(ProductCreateForm productCreateForm){
-        ProductInfo productInfo=new ProductInfo();
-        productInfo.setCategoryType(productCreateForm.getType());
-        productInfo.setProductDescription(productCreateForm.getDescription());
-        productInfo.setProductName(productCreateForm.getName());
-        productInfo.setProductIcon(productCreateForm.getIcon());
-        productInfo.setProductPrice(productCreateForm.getPrice());
-//        productInfo.setProduct(productForm.getInfo());
-        productInfo.setProductPrice(productCreateForm.getOldPrice());
 
-        productInfoService.save(productInfo);
-        return ResultUtil.success(productInfo);
+    @RequestMapping("/create")
+    public RootData addProduct(@RequestBody ProductCreateForm productCreateForm){
+        ProductInfo productInfo=new ProductInfo();
+        BeanUtils.copyProperties(productCreateForm, productInfo);
+        ProductInfo save = productInfoService.save(productInfo);
+        return ResultUtil.success(save);
     }
+
     @RequestMapping("/delete")
-    public RootData delteteProduct(ProductForm productForm){
-         ProductInfo productInfo= productInfoService.delete(productForm.getId());
+    public RootData delete(@RequestBody ProductForm productForm){
+        ProductInfo productInfo= productInfoService.delete(productForm.getProductId());
         return ResultUtil.success(productInfo);
     }
-    @RequestMapping("/change")
-    public RootData changeProduct(ProductForm productForm){
-        ProductInfo productInfo= productInfoService.findOne(productForm.getId());
-        if (productInfo!=null){
-           productInfoService.save(productInfo);
-        }
-        else {
-            throw new SellException(ResultMapping.PRODUCT_NOT_EXIST);
-        }
-        return ResultUtil.success(productInfo);
+    @RequestMapping("/update")
+    public RootData changeProduct(@RequestBody ProductForm productForm){
+        ProductInfo update = productInfoService.update(productForm);
+        return ResultUtil.success(update);
     }
 }

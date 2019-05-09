@@ -3,6 +3,7 @@ package cn.zucc.etakeout.bean;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
@@ -16,30 +17,33 @@ import java.math.BigDecimal;
 @Data
 public class ProductInfo {
     @Id
+    @GeneratedValue
     private int productId;
 
     private String productName;
 
     private BigDecimal productPrice;
 
-    private String productDescription;
+    private String productDescription = "这个卖家很懒, 还没上传~";
 
-    private Integer productSellCount;
+    private Integer productSellCount = 0;
 
     private BigDecimal productOldPrice;
 
-    private Integer productRating;
+    private Integer productRating = 100;
 
-    private String productIcon;
+    private String productInfo = "这个卖家很懒, 还没上传~";
 
-    private String productImages;
+    private String productIcon = "http://pr0o6uaio.bkt.clouddn.com/FrWYf-tRZvlKCZJB8SXj4SoMNH94";
 
-    private Integer productStock;
+    private String productImages = "http://pr0o6uaio.bkt.clouddn.com/FrWYf-tRZvlKCZJB8SXj4SoMNH94";
 
-    private Integer productStatus;
+    private Integer productStock = 0;
+
+    private Integer productStatus = 0;
 
     private Integer categoryType;
 
-    private BigDecimal score;
+    private BigDecimal score = new BigDecimal(5);
 
 }
