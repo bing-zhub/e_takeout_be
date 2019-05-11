@@ -1,10 +1,13 @@
 package cn.zucc.etakeout.bean;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @Date ：Created in 2019/4/29 23:43
@@ -41,5 +44,9 @@ public class ProductInfo {
     private Integer categoryType;
 
     private BigDecimal score;
+    @CreatedDate
+    private Date creatTime;
+    @LastModifiedDate
+    private Date updateTime;
 
 }

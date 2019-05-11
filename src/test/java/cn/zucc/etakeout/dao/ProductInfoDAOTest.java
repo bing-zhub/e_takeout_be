@@ -1,10 +1,15 @@
 package cn.zucc.etakeout.dao;
 
 import cn.zucc.etakeout.bean.ProductInfo;
+import cn.zucc.etakeout.dto.CartDTO;
+import cn.zucc.etakeout.service.ProductInfoService;
+import cn.zucc.etakeout.service.impl.ProductInfoServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Array;
@@ -22,7 +27,7 @@ public class ProductInfoDAOTest {
     @Test
     public void saveTest(){
         ProductInfo productInfo = new ProductInfo();
-        productInfo.setProductId("123");
+        productInfo.setProductId(12);
         productInfo.setProductName("西八");
         productInfo.setProductPrice(new BigDecimal(2.3));
         productInfo.setProductStock(10);
@@ -40,5 +45,11 @@ public class ProductInfoDAOTest {
             System.out.println(productInfo);
         }
     }
+//    public static void main (String[] agrs){
+//        ProductInfoServiceImpl productInfoService = new ProductInfoServiceImpl() ;
+//        System.out.println("2144");
+//        List<ProductInfo> productInfo=productInfoService.findUpAll();
+//        System.out.println(productInfo.size());
+//    }
 
 }

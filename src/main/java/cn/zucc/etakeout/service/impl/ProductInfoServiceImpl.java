@@ -89,4 +89,15 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         return productInfo;
     }
 
+    @Override
+    public List<ProductInfo> count() {
+        return productInfoDAO.findAll();
+    }
+
+    @Override
+    public List<ProductInfo> findByCategoryType(int categoryType) {
+        List<ProductInfo> productInfoList=productInfoDAO.findByCategoryType(categoryType);
+        return  productInfoList;
+    }
+
 }

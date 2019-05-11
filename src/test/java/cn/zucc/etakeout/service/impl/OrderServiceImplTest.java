@@ -36,12 +36,12 @@ public class OrderServiceImplTest {
         List<OrderDetail> orderDetails = new LinkedList<>();
 
         OrderDetail o = new OrderDetail();
-        o.setProductId("1");
+        o.setProductId(1);
         o.setProductQuantity(10);
         orderDetails.add(o);
 
         OrderDetail o2 = new OrderDetail();
-        o2.setProductId("123");
+        o2.setProductId(123);
         o2.setProductQuantity(5);
         orderDetails.add(o2);
 

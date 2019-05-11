@@ -1,5 +1,6 @@
 package cn.zucc.etakeout.service;
 
+import cn.zucc.etakeout.bean.OrderDetail;
 import cn.zucc.etakeout.bean.ProductInfo;
 import cn.zucc.etakeout.dto.CartDTO;
 import org.springframework.data.domain.Page;
@@ -21,4 +22,10 @@ public interface ProductInfoService {
     void decreaseStock(List<CartDTO> cartDTOList);
 
     ProductInfo delete(int productInfoId);
+
+    List<ProductInfo> count();
+
+    List<ProductInfo> findByCategoryType(int categoryType);
+
+
 }

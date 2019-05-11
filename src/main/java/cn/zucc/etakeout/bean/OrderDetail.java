@@ -19,7 +19,7 @@ public class OrderDetail {
 
     private String orderId;
 
-    private String productId;
+    private int productId;
 
     private String productName;
 

@@ -15,10 +15,12 @@ import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.Controller;
 
+import javax.validation.Valid;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -71,7 +73,7 @@ public class SellerProductController  {
         return ResultUtil.success(productDataList);
     }
     @RequestMapping("/create")
-    public RootData addProduct(ProductCreateForm productCreateForm){
+    public RootData addProduct(@RequestBody @Valid ProductCreateForm productCreateForm){
         ProductInfo productInfo=new ProductInfo();
         productInfo.setCategoryType(productCreateForm.getType());
         productInfo.setProductDescription(productCreateForm.getDescription());
@@ -85,12 +87,12 @@ public class SellerProductController  {
         return ResultUtil.success(productInfo);
     }
     @RequestMapping("/delete")
-    public RootData delteteProduct(ProductForm productForm){
+    public RootData delteteProduct(@RequestBody @Valid ProductForm productForm){
          ProductInfo productInfo= productInfoService.delete(productForm.getId());
         return ResultUtil.success(productInfo);
     }
     @RequestMapping("/change")
-    public RootData changeProduct(ProductForm productForm){
+    public RootData changeProduct(@RequestBody @Valid ProductForm productForm){
         ProductInfo productInfo= productInfoService.findOne(productForm.getId());
         if (productInfo!=null){
            productInfoService.save(productInfo);

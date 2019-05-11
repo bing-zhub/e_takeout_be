@@ -18,8 +18,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     public ProductCategory addProductCategory(String categoryName, Integer categoryType) {
-        ProductCategory type=productCategoryDAO.findBYCategoryType(categoryType);
-        ProductCategory name=productCategoryDAO.findBYCategoryName(categoryName);
+        ProductCategory type=productCategoryDAO.findByCategoryType(categoryType);
+        ProductCategory name=productCategoryDAO.findByCategoryName(categoryName);
         ProductCategory result=new ProductCategory();
         if (type!=null){
             throw new SellException(ResultMapping.CATRGORY_TYPE_EXIT);
@@ -46,6 +46,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
+    public ProductCategory save(ProductCategory productCategory) {
+        productCategoryDAO.save(productCategory);
+        return productCategory;
+    }
+
+    @Override
     public void deleteProductCategory(Integer categoryId) {
         ProductCategory type=productCategoryDAO.findOne(categoryId);
 
@@ -57,29 +63,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         }
     }
 
-    @Override
-    public void changeCategoryName(Integer categoryId, String categoryName) {
-        ProductCategory type=productCategoryDAO.findOne(categoryId);
-        if (type==null){
-            throw new SellException(ResultMapping.CATRGORY_TYPE_NO);
-        }
-        else {
-            type.setCategoryName(categoryName);
-            productCategoryDAO.save(type);
-        }
-    }
-
-    @Override
-    public void changeCategoryType(Integer categoryId,Integer newCategoryType) {
-        ProductCategory type=productCategoryDAO.findOne(categoryId);
-        if (type==null){
-            throw new SellException(ResultMapping.CATRGORY_TYPE_NO);
-        }
-        else {
-            type.setCategoryType(newCategoryType);
-            productCategoryDAO.save(type);
-        }
-    }
 
     @Override
     public ProductCategory getProductCategory(Integer categoryId) {
