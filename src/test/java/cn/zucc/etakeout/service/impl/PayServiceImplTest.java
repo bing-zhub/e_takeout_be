@@ -15,8 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PayServiceImplTest {
@@ -46,7 +44,7 @@ public class PayServiceImplTest {
     public void pay() {
         OrderDTO one = orderService.findOne("15571908637436601921");
         OrderDTO pay = orderService.pay(one);
-        Assert.assertTrue(pay.getPayStatus() == PayStatusMapping.SUCCESS.getCode());
+        Assert.assertTrue(pay.getPayStatus() == PayStatusMapping.PAID.getCode());
     }
 
     @Test

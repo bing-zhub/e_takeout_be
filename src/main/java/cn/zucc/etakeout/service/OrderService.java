@@ -1,6 +1,5 @@
 package cn.zucc.etakeout.service;
 
-import cn.zucc.etakeout.bean.OrderMaster;
 import cn.zucc.etakeout.dto.OrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
