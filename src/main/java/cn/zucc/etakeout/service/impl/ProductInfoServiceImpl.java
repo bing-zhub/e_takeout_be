@@ -52,6 +52,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         ProductInfo other = new ProductInfo();
         BeanUtils.copyProperties(productForm, other);
         other.setProductStock(one.getProductStock());
+        other.setProductStatus(one.getProductStatus());
         other.setProductSellCount(one.getProductSellCount());
         return productInfoDAO.save(other);
     }
