@@ -4,9 +4,11 @@ import cn.zucc.etakeout.bean.ProductInfo;
 import cn.zucc.etakeout.dao.ProductInfoDAO;
 import cn.zucc.etakeout.dto.CartDTO;
 import cn.zucc.etakeout.exception.SellException;
+import cn.zucc.etakeout.form.ProductForm;
 import cn.zucc.etakeout.mappings.ProductStatusMapping;
 import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.ProductInfoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +42,20 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     public ProductInfo save(ProductInfo productInfo) {
         return productInfoDAO.save(productInfo);
     }
+
+    @Override
+    public ProductInfo update(ProductForm productForm) {
+        ProductInfo one = productInfoDAO.findOne(productForm.getProductId());
+        if(one==null){
+            throw new SellException(ResultMapping.PRODUCT_NOT_EXIST);
+        }
+        ProductInfo other = new ProductInfo();
+        BeanUtils.copyProperties(productForm, other);
+        other.setProductStock(one.getProductStock());
+        other.setProductSellCount(one.getProductSellCount());
+        return productInfoDAO.save(other);
+    }
+
 
     @Override
     @Transactional
@@ -77,7 +93,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Override
     @Transactional
-
     public ProductInfo delete(int productInfoId) {
         ProductInfo productInfo=productInfoDAO.findOne(productInfoId);
         if (productInfo!=null){

@@ -27,7 +27,9 @@ public class ProductInfoDAOTest {
     @Test
     public void saveTest(){
         ProductInfo productInfo = new ProductInfo();
+
         productInfo.setProductId(12);
+
         productInfo.setProductName("西八");
         productInfo.setProductPrice(new BigDecimal(2.3));
         productInfo.setProductStock(10);

@@ -1,28 +1,30 @@
 package cn.zucc.etakeout.form;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.persistence.Id;
 import java.math.BigDecimal;
 @Data
 public class ProductForm {
-    @NotEmpty(message = "productId必填")
-    private int id;
-    @NotEmpty(message = "productName必填")
-    private String name;
-    @NotEmpty(message = "productPrice必填")
-    private BigDecimal price;
-    @NotEmpty(message = "productPrice必填")
-    private BigDecimal oldPrice;
-    @NotEmpty(message = "info必填")
-    private Integer info;
-    @NotEmpty(message = "description必填")
-    private String description;
-    @NotEmpty(message = "icon必填")
-    private String icon;
-    @NotEmpty(message = "productStatus必填")
-    private String image;
-    @NotEmpty(message = "categoryType")
-    private Integer type;
+//    @NotEmpty(message = "productId必填")
+    @JsonProperty("id")
+    private Integer productId;
+    @JsonProperty("name")
+    private String productName;
+    @JsonProperty("price")
+    private BigDecimal productPrice;
+    @JsonProperty("description")
+    private String productDescription;
+    @JsonProperty("oldPrice")
+    private BigDecimal productOldPrice;
+    @JsonProperty("info")
+    private String productInfo;
+    @JsonProperty("icon")
+    private String productIcon;
+    @JsonProperty("image")
+    private String productImages;
+    @JsonProperty("status")
+    private Integer productStatus;
+    @JsonProperty("type")
+    private Integer categoryType;
 }

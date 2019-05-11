@@ -35,7 +35,7 @@ public class StaticController {
         List<ProductInfo> productInfoList=productInfoService.count();
         Date createDate;
         for (ProductInfo productInfo:productInfoList){
-            createDate=productInfo.getCreatTime();
+            createDate=productInfo.getCreateTime();
             diff=now.getTime()-createDate.getTime();
             int day= (int) (diff/dayTime);
             if (day<7)

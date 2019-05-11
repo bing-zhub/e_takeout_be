@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 public class ProductInfoData {
     @JsonProperty("id")
-    private String productId;
+    private Integer productId;
 
     @JsonProperty("name")
     private String productName;
@@ -21,4 +21,13 @@ public class ProductInfoData {
 
     @JsonProperty("icon")
     private String productIcon;
+
+    @JsonProperty("image")
+    private String productImages;
+
+    @JsonProperty("sellCount")
+    private Integer productSellCount;
+
+    @JsonProperty("rating")
+    private Integer productRating;
 }

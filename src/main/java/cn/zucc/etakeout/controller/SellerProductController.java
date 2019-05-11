@@ -14,10 +14,8 @@ import cn.zucc.etakeout.service.ProductInfoService;
 import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.Controller;
 
 import javax.validation.Valid;
@@ -72,34 +70,41 @@ public class SellerProductController  {
 
         return ResultUtil.success(productDataList);
     }
-    @RequestMapping("/create")
-    public RootData addProduct(@RequestBody @Valid ProductCreateForm productCreateForm){
-        ProductInfo productInfo=new ProductInfo();
-        productInfo.setCategoryType(productCreateForm.getType());
-        productInfo.setProductDescription(productCreateForm.getDescription());
-        productInfo.setProductName(productCreateForm.getName());
-        productInfo.setProductIcon(productCreateForm.getIcon());
-        productInfo.setProductPrice(productCreateForm.getPrice());
-//        productInfo.setProduct(productForm.getInfo());
-        productInfo.setProductPrice(productCreateForm.getOldPrice());
 
-        productInfoService.save(productInfo);
+    @RequestMapping("/create")
+
+    public RootData addProduct(@RequestBody @Valid ProductCreateForm productCreateForm){
+
+        ProductInfo productInfo=new ProductInfo();
+        BeanUtils.copyProperties(productCreateForm, productInfo);
+        ProductInfo save = productInfoService.save(productInfo);
+        return ResultUtil.success(save);
+    }
+
+    @PostMapping("/delete")
+
+    public RootData deleteProduct(@RequestBody @Valid ProductForm productForm){
+         ProductInfo productInfo= productInfoService.delete(productForm.getProductId());
         return ResultUtil.success(productInfo);
     }
-    @RequestMapping("/delete")
-    public RootData delteteProduct(@RequestBody @Valid ProductForm productForm){
-         ProductInfo productInfo= productInfoService.delete(productForm.getId());
-        return ResultUtil.success(productInfo);
-    }
-    @RequestMapping("/change")
-    public RootData changeProduct(@RequestBody @Valid ProductForm productForm){
-        ProductInfo productInfo= productInfoService.findOne(productForm.getId());
-        if (productInfo!=null){
-           productInfoService.save(productInfo);
+    @PostMapping("/update")
+    public RootData changeProduct(@RequestBody @Valid ProductForm productForm, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
-        else {
-            throw new SellException(ResultMapping.PRODUCT_NOT_EXIST);
-        }
-        return ResultUtil.success(productInfo);
+//        ProductInfo productInfo1=new ProductInfo();
+//        ProductInfo productInfo = productInfoService.findOne(productForm.getProductId());
+//        if (productInfo != null) {
+//
+//            BeanUtils.copyProperties(productForm,productInfo1);
+//            productInfo1.setProductStock(productInfo.getProductStock());
+//            productInfo1.setProductStatus(productInfo.getProductStatus());
+//            productInfoService.save(productInfo1);
+//        } else {
+//            throw new SellException(ResultMapping.PRODUCT_NOT_EXIST);
+//        }
+        return ResultUtil.success(productInfoService.update(productForm));
     }
+
+
 }

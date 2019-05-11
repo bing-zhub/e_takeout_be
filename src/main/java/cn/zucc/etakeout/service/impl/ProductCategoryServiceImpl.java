@@ -65,6 +65,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
 
     @Override
+    public ProductCategory updateProductCategory(ProductCategory productCategory) {
+        return productCategoryDAO.save(productCategory);
+    }
+
+
+    @Override
     public ProductCategory getProductCategory(Integer categoryId) {
         ProductCategory type=productCategoryDAO.findOne(categoryId);
         if (type==null){
