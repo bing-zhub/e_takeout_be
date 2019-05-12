@@ -112,7 +112,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDTO> findList(String consumerOpenId, Pageable pageable) {
-        Page<OrderMaster> orderMasterPage = orderMasterDAO.findByConsumerOpenid(consumerOpenId, pageable);
+        Page<OrderMaster> orderMasterPage;
+        // TODO 如果做后台权限 从这里改 目前写死
+        // TODO 分页没有做 一起获取全部 有点消耗
+        if (!consumerOpenId.equals("oKLGx51nBAgA814f3-uZXksVTKJQ")) {
+            orderMasterPage = orderMasterDAO.findByConsumerOpenid(consumerOpenId, pageable);
+        } else {
+            orderMasterPage = orderMasterDAO.findAll(pageable);
+        }
         List<OrderDTO> orderDTOList = Converter.convert(orderMasterPage.getContent());
         for(OrderDTO orderDTO: orderDTOList){
             orderDTO.setOrderDetails(findOne(orderDTO.getOrderId()).getOrderDetails());
@@ -146,7 +153,7 @@ public class OrderServiceImpl implements OrderService {
         productInfoService.increaseStock(cartDTOS);
 
         // 如果已支付 退款
-        if(orderDTO.getPayStatus().equals(PayStatusMapping.SUCCESS.getCode())){
+        if (orderDTO.getPayStatus().equals(PayStatusMapping.PAID.getCode())) {
             payService.refund(orderDTO);
         }
         orderDTO.setOrderStatus(OrderStatusMapping.CANCELED.getCode());
@@ -184,7 +191,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 修改支付状态
-        orderDTO.setPayStatus(PayStatusMapping.SUCCESS.getCode());
+        orderDTO.setPayStatus(PayStatusMapping.PAID.getCode());
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDTO, orderMaster);
         OrderMaster save = orderMasterDAO.save(orderMaster);

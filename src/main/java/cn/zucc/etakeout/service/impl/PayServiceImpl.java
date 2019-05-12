@@ -37,10 +37,7 @@ public class PayServiceImpl implements PayService{
         payRequest.setOrderId(orderDTO.getOrderId());
         payRequest.setOrderName("微信H5测试");
         payRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
-        System.out.println(payRequest);
-        PayResponse pay = bestPayService.pay((payRequest));
-        System.out.println(pay);
-        return pay;
+        return bestPayService.pay(payRequest);
     }
 
     @Override

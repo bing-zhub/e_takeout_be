@@ -13,6 +13,7 @@ import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +59,7 @@ public class  ConsumerOrderController {
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
-        PageRequest pageRequest = new PageRequest(queryForm.getPage(), queryForm.getSize());
+        PageRequest pageRequest = new PageRequest(queryForm.getPage(), queryForm.getSize(), Sort.Direction.DESC, "createTime");
         Page<OrderDTO> orderDTOS = orderService.findList(queryForm.getOpenId(), pageRequest);
 
         return ResultUtil.success(orderDTOS.getContent());
@@ -90,19 +91,7 @@ public class  ConsumerOrderController {
         return ResultUtil.success(orderService.cancel(orderDTO));
     }
 
-    // 支付订单
-    @GetMapping("/pay")
-    public RootData pay(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
-        }
-        OrderDTO orderDTO = orderService.findOne(queryForm.getOrderId());
-        if(!queryForm.getOpenId().equals(orderDTO.getConsumerOpenid())){
-            throw new SellException(ResultMapping.PERMISSION_DENIED);
-        }
-        return ResultUtil.success(orderService.pay(orderDTO));
-    }
-
+    // 完结订单
     @GetMapping("/finish")
     public RootData finish(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
         if(bindingResult.hasErrors()){

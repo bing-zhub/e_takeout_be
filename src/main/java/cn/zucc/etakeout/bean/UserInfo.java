@@ -14,11 +14,11 @@ import javax.persistence.Id;
 @Data
 public class UserInfo {
 
+    @Id
+    String username;
+    String pwd;
     String role;
     String introduction;
     String avatar;
-    @Id
-   // String name;
-    String username;
-    String pwd;
+    String openId;
 }
