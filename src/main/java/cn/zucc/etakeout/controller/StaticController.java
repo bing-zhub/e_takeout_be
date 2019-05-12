@@ -34,18 +34,20 @@ public class StaticController {
         Long diff;
         List<ProductInfo> productInfoList=productInfoService.count();
         Date createDate;
-        for (ProductInfo productInfo:productInfoList){
-            createDate=productInfo.getCreateTime();
-            diff=now.getTime()-createDate.getTime();
-            int day= (int) (diff/dayTime);
-            if (day<7)
-                for(int i=0;i<=day;i++){
-                    weekCount.set(i, weekCount.get(i)+1);}
-            else
-                for(int i=0;i<=6;i++){
-                weekCount.set(6, weekCount.get(day)+1);}
+        for (ProductInfo productInfo:productInfoList) {
+            createDate = productInfo.getCreateTime();
+            diff = now.getTime() - createDate.getTime();
+            int day = (int) (diff / dayTime);
+            if (day < 7)
+                for (int i = 0; i <= day; i++) {
+                    weekCount.set(i, weekCount.get(i) + 1);
+                }
+            else {
+                for (int i = 0; i <= 6; i++) {
+                    weekCount.set(i, weekCount.get(i) + 1);
+                }
+            }
         }
-
 
         for (Integer i:weekCount){
             System.out.println(i);
@@ -76,16 +78,17 @@ public class StaticController {
             diff = now.getTime() - createDate.getTime();
             int day = (int) (diff / dayTime);
             if (day < 7){
-//                for (int i = 0; i <= day; i++) {
-                    weekConsumption.set(day, weekConsumption.get(day) + perConsumption);
-                    weekDeal.set(day, weekDeal.get(day) + 1);
+                for (int i = 0; i <= day; i++) {
+                    weekConsumption.set(i, weekConsumption.get(i) + perConsumption);
+                    weekDeal.set(i, weekDeal.get(i) + 1);
+                    }
                 }
-//            else{
-////                for (int i = 0; i <= 6; i++) {
-//                    weekConsumption.set(day, weekConsumption.get(day) + perConsumption);
-//                    weekDeal.set(day, weekDeal.get(day) + 1);
-//                }
-
+            else if (day<14){
+                for (int i = 6; i >=day-6; i--) {
+                    weekConsumption.set(i, weekConsumption.get(i) + perConsumption);
+                    weekDeal.set(i, weekDeal.get(i) + 1);
+                }
+            }
             for (int i = 0; i <= 6; i++) {
                 weekConsumption.set(i, weekConsumption.get(i) / weekDeal.get(i));
             }
@@ -96,8 +99,8 @@ public class StaticController {
     @RequestMapping("/complete")
     public  RootData countComplete() {
         int dayTime = 24 * 60 * 60 * 1000;
-        List<Integer> weekCompleted= Arrays.asList(0, 0, 0, 0, 0, 0, 0);
-        List<Integer> weekUnCompleted= Arrays.asList(0, 0, 0, 0, 0, 0, 0);
+        List<Integer> weekCompleted= Arrays.asList(0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0);
+//        List<Integer> weekUnCompleted= Arrays.asList(0, 0, 0, 0, 0, 0, 0);
         int completed = 0, uncompleted = 0;
         List<OrderMaster> orderMasterList = orderService.findAll();
         Date now = new Date();
@@ -109,32 +112,29 @@ public class StaticController {
             int day = (int) (diff / dayTime);
             if (day < 7) {
                 if (orderMaster.getOrderStatus()==1)
-//                    for (int i = 0; i <= day; i++) {
-                        weekCompleted.set(day, weekCompleted.get(day) + 1);
-//                    }
-//                else if (orderMaster.getOrderStatus()==2){
-////                    for (int i = 0; i <= day; i++) {
-//                        weekUnCompleted.set(day, weekUnCompleted.get(day) + 1);
-////                    }
-//                }
+                    for (int i = 0; i <= day; i++) {
+                        weekCompleted.set(i, weekCompleted.get(i) + 1);
+                    }
+                else if (orderMaster.getOrderStatus()==2){
+                    for (int i = 0; i <= day; i++) {
+                        weekCompleted.set(i+6, weekCompleted.get(6+i) + 1);
+                    }
+                }
             }
             else {
                 if (orderMaster.getOrderStatus()==1)
-//                    for (int i = 0; i <= 6; i++) {
-                        weekCompleted.set(day, weekCompleted.get(day) + 1);
-//                    }
-//                else if (orderMaster.getOrderStatus()==2){
-////                    for (int i = 0; i <= 6; i++) {
-//                        weekUnCompleted.set(day, weekUnCompleted.get(day) + 1);
-////                    }
-//                }
+                    for (int i = 0; i <= day-6; i++) {
+                        weekCompleted.set(i, weekCompleted.get(i) + 1);
+                    }
+                else if (orderMaster.getOrderStatus()==2){
+                    for (int i = 0; i <= day-6; i++) {
+                        weekCompleted.set(i+6, weekCompleted.get(i+6) + 1);
+                    }
+                }
             }
         }
 
-        List<Integer> result = new ArrayList<>();
-        result.add(completed);
-        result.add(uncompleted);
-        return ResultUtil.success(result);
+        return ResultUtil.success(weekCompleted);
 
     }
     @RequestMapping("/income")
@@ -158,9 +158,14 @@ public class StaticController {
                 diff = now.getTime() - createDate.getTime();
                 int day = (int) (diff / dayTime);
                 if (day < 7){
-                    weekIncome.set(day, weekIncome.get(day) + perConsumption);
+                    for (int i = 0; i <= day; i++) {
+                        weekIncome.set(i, weekIncome.get(i) + perConsumption);}
                 }
-
+                else {
+                    for (int i = 6; i >= day-6; i--) {
+                        weekIncome.set(i, weekIncome.get(i) + perConsumption);
+                    }
+                }
 
 
 

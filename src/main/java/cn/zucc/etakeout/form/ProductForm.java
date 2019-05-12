@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import java.math.BigDecimal;
 @Data
 public class ProductForm {
-//    @NotEmpty(message = "productId必填")
+
     @JsonProperty("id")
     private Integer productId;
     @JsonProperty("name")
