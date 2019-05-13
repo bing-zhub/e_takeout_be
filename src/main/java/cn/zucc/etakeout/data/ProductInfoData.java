@@ -16,6 +16,9 @@ public class ProductInfoData {
     @JsonProperty("price")
     private BigDecimal productPrice;
 
+    @JsonProperty("oldPrice")
+    private BigDecimal productOldPrice;
+
     @JsonProperty("description")
     private String productDescription;
 
