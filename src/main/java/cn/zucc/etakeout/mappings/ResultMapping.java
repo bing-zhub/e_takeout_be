@@ -25,7 +25,8 @@ public enum ResultMapping {
     CATRGORY_NAME_EXIT(25,"类别名称已经存在"),
     CATRGORY_NAME_NO(26,"类别名称不存在"),
     CATRGORY_TYPE_EXIT(24,"类别编号已经存在"),
-    CATRGORY_TYPE_NO(27,"类别编号不存在");
+    CATRGORY_TYPE_NO(27,"类别编号不存在"),
+    CATEGORY_PRODUCT_EXIT(28,"该类别还有商品存在");
     private Integer code;
 
     private String message;

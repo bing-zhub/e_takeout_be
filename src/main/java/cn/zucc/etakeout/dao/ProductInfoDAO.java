@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ProductInfoDAO extends JpaRepository<ProductInfo, Integer> {
     List<ProductInfo> findByProductStatus(Integer Status);
+    List<ProductInfo> findByCategoryType(Integer categoryType);
 }

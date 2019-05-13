@@ -1,15 +1,27 @@
 package cn.zucc.etakeout.controller;
 
 import cn.zucc.etakeout.bean.ProductCategory;
+import cn.zucc.etakeout.bean.ProductInfo;
 import cn.zucc.etakeout.data.RootData;
+
+import cn.zucc.etakeout.exception.SellException;
+
 import cn.zucc.etakeout.form.CategoryCreateForm;
 import cn.zucc.etakeout.form.CategoryForm;
+import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.ProductCategoryService;
+import cn.zucc.etakeout.service.ProductInfoService;
 import cn.zucc.etakeout.util.ResultUtil;
 import org.simpleframework.xml.Root;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,15 +29,19 @@ import java.util.List;
 public class ProductCategoryController {
     @Autowired
     private ProductCategoryService productCategoryService;
+    @Autowired
+    private ProductInfoService productInfoService;
+    private CategoryCreateForm categoryCreateFormForm;
+
     @RequestMapping("/list")
     public RootData list(){
         List<ProductCategory> list=productCategoryService.getAllProductCategory();
         return ResultUtil.success(list);
     }
+    @RequestMapping("/create")
+    public RootData create(@RequestBody @Valid CategoryCreateForm categoryCreateForm){
 
-    @PostMapping("/create")
-    public RootData create(@RequestBody CategoryCreateForm categoryForm){
-        ProductCategory productCategory=productCategoryService.addProductCategory(categoryForm.getCategoryName(),categoryForm.getCategoryType());
+        ProductCategory productCategory=productCategoryService.addProductCategory(categoryCreateForm.getCategoryName(),categoryCreateForm.getCategoryType());
         return ResultUtil.success(productCategory);
     }
 

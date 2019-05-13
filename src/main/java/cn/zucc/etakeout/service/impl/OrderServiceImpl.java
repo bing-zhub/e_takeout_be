@@ -201,5 +201,12 @@ public class OrderServiceImpl implements OrderService {
         return orderDTO;
     }
 
+    @Override
+    public List<OrderMaster> findAll() {
+        return orderMasterDAO.findAll();
+    }
+    public List<OrderDetail> findDetail(String orderId){
+        return  orderDetailDAO.findByOrderId(orderId);
+    }
 
 }
