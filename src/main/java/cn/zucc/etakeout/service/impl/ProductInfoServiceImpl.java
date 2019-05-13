@@ -7,6 +7,7 @@ import cn.zucc.etakeout.exception.SellException;
 import cn.zucc.etakeout.form.ProductForm;
 import cn.zucc.etakeout.mappings.ProductStatusMapping;
 import cn.zucc.etakeout.mappings.ResultMapping;
+import cn.zucc.etakeout.mappings.StatisMapping;
 import cn.zucc.etakeout.service.ProductInfoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -28,16 +33,18 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         return productInfoDAO.findOne(productId);
     }
 
+    // 查询所有上架商品
     @Override
     public List<ProductInfo> findUpAll() {
         return productInfoDAO.findByProductStatus(ProductStatusMapping.ONSALE.getCode());
     }
-    @Transactional
+
+    // 查询所有商品
     @Override
     public Page<ProductInfo> findAll(Pageable pageable) {
         return productInfoDAO.findAll(pageable);
     }
-    @Transactional
+
     @Override
     public ProductInfo save(ProductInfo productInfo) {
         return productInfoDAO.save(productInfo);
@@ -56,7 +63,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         other.setProductSellCount(one.getProductSellCount());
         return productInfoDAO.save(other);
     }
-
 
     @Override
     @Transactional
@@ -114,6 +120,28 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     public List<ProductInfo> findByCategoryType(int categoryType) {
         List<ProductInfo> productInfoList=productInfoDAO.findByCategoryType(categoryType);
         return  productInfoList;
+    }
+
+    @Override
+    public List<Double> getStatics(Integer code) {
+        List<Double> staticDTOS = Arrays.asList(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        List<Object[]> statics = new LinkedList<>();
+        if (code.equals(StatisMapping.ProductAdded.getCode())) {
+            statics = productInfoDAO.getCountOfProductAddedInOneWeek();
+        } else if (code.equals(StatisMapping.Income.getCode())) {
+            statics = productInfoDAO.getIncomeInOneWeek();
+        } else if (code.equals(StatisMapping.AverageConsumption.getCode())) {
+            statics = productInfoDAO.getAverage();
+        } else if (code.equals(StatisMapping.OrderClosed.getCode())) {
+            statics = productInfoDAO.getOrderClosed();
+        }
+        for (Object[] col : statics) {
+            if (col[1] instanceof BigInteger)
+                staticDTOS.set((Integer) col[0], ((BigInteger) col[1]).doubleValue());
+            else if (col[1] instanceof BigDecimal)
+                staticDTOS.set((Integer) col[0], ((BigDecimal) col[1]).doubleValue());
+        }
+        return staticDTOS;
     }
 
 }

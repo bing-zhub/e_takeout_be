@@ -1,6 +1,5 @@
 package cn.zucc.etakeout.service;
 
-import cn.zucc.etakeout.bean.OrderDetail;
 import cn.zucc.etakeout.bean.ProductInfo;
 import cn.zucc.etakeout.dto.CartDTO;
 import cn.zucc.etakeout.form.ProductForm;
@@ -30,5 +29,6 @@ public interface ProductInfoService {
 
     List<ProductInfo> findByCategoryType(int categoryType);
 
+    List<Double> getStatics(Integer code);
 
 }
