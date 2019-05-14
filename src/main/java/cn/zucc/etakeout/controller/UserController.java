@@ -6,10 +6,12 @@ import cn.zucc.etakeout.exception.SellException;
 import cn.zucc.etakeout.form.LoginForm;
 import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.UserService;
-import cn.zucc.etakeout.service.impl.UserServiceImpl;
 import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Date ：Created in 2019/4/30 16:33
@@ -36,6 +38,7 @@ public class UserController {
             }
         }
     }
+
     @PostMapping("/register")
     public RootData register(@RequestBody LoginForm loginForm){
         UserInfo userInfo =new UserInfo();
@@ -45,6 +48,7 @@ public class UserController {
 
         return ResultUtil.success("admin-token");
     }
+
     @RequestMapping("/info")
     public RootData info(){
         UserInfo userInfo = new UserInfo();
