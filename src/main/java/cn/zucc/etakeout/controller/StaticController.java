@@ -16,26 +16,32 @@ public class StaticController {
     private ProductInfoService productInfoService;
 
     //查看商品数目
-    @RequestMapping("/count")
+    @RequestMapping("/week/count")
     public RootData countProduct() {
-        return ResultUtil.success(productInfoService.getStatics(StatisMapping.ProductAdded.getCode()));
+        return ResultUtil.success(productInfoService.getWeekStatics(StatisMapping.ProductAdded.getCode()));
     }
 
     // 人均消费
-    @RequestMapping("/consumption")
+    @RequestMapping("/week/consumption")
     public RootData perConsumption() {
-        return ResultUtil.success(productInfoService.getStatics(StatisMapping.AverageConsumption.getCode()));
+        return ResultUtil.success(productInfoService.getWeekStatics(StatisMapping.AverageConsumption.getCode()));
     }
 
     // 完结订单数
-    @RequestMapping("/complete")
+    @RequestMapping("/week/complete")
     public RootData countComplete() {
-        return ResultUtil.success(productInfoService.getStatics(StatisMapping.OrderClosed.getCode()));
+        return ResultUtil.success(productInfoService.getWeekStatics(StatisMapping.OrderClosed.getCode()));
     }
 
     // 总收入
-    @RequestMapping("/income")
+    @RequestMapping("/week/income")
     public RootData income() {
-        return ResultUtil.success(productInfoService.getStatics(StatisMapping.Income.getCode()));
+        return ResultUtil.success(productInfoService.getWeekStatics(StatisMapping.Income.getCode()));
     }
+
+    @RequestMapping("/total")
+    public RootData totalOrder() {
+        return ResultUtil.success(productInfoService.getTotalStatics());
+    }
+
 }

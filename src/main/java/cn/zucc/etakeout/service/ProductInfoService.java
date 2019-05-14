@@ -29,6 +29,7 @@ public interface ProductInfoService {
 
     List<ProductInfo> findByCategoryType(int categoryType);
 
-    List<Double> getStatics(Integer code);
+    List<Double> getWeekStatics(Integer code);
 
+    Object getTotalStatics();
 }

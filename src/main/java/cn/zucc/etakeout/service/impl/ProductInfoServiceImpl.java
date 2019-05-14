@@ -123,7 +123,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
-    public List<Double> getStatics(Integer code) {
+    public List<Double> getWeekStatics(Integer code) {
         List<Double> staticDTOS = Arrays.asList(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
         List<Object[]> statics = new LinkedList<>();
         if (code.equals(StatisMapping.ProductAdded.getCode())) {
@@ -142,6 +142,17 @@ public class ProductInfoServiceImpl implements ProductInfoService {
                 staticDTOS.set((Integer) col[0], ((BigDecimal) col[1]).doubleValue());
         }
         return staticDTOS;
+    }
+
+    @Override
+    public List<Double> getTotalStatics() {
+
+        List<Double> ret = Arrays.asList(0.0, 0.0, 0.0, 0.0);
+        ret.set(0, ((BigInteger) productInfoDAO.getOrderTotal()).doubleValue());
+        ret.set(1, ((BigDecimal) productInfoDAO.getAverageTotal()).doubleValue());
+        ret.set(2, ((BigDecimal) productInfoDAO.getIncomeTotal()).doubleValue());
+        ret.set(3, ((BigInteger) productInfoDAO.getProductTotal()).doubleValue());
+        return ret;
     }
 
 }

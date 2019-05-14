@@ -34,4 +34,16 @@ public interface ProductInfoDAO extends JpaRepository<ProductInfo, Integer> {
 
     @Query(value = orderClosedQuery, nativeQuery = true)
     List<Object[]> getOrderClosed();
+
+    @Query(value = "SELECT COUNT(order_id) as value from order_master", nativeQuery = true)
+    Object getOrderTotal();
+
+    @Query(value = "SELECT COUNT(product_id) as value  from product_info", nativeQuery = true)
+    Object getProductTotal();
+
+    @Query(value = "SELECT SUM(order_amount) as value  from order_master", nativeQuery = true)
+    Object getIncomeTotal();
+
+    @Query(value = "SELECT SUM(order_amount)/COUNT(order_id) as value  from order_master", nativeQuery = true)
+    Object getAverageTotal();
 }

@@ -13,7 +13,11 @@ public enum StatisMapping {
     ProductAdded(0, "一周内添加的商品数"),
     Income(1, "一周内收入"),
     AverageConsumption(2, "一周内人均消费"),
-    OrderClosed(3, "一周内完结订单数");
+    OrderClosed(3, "一周内完结订单数"),
+    OrderTotal(4, "总订单数"),
+    ProductTotal(5, "总商品数"),
+    IncomeTotal(6, "总收入"),
+    AverageTotal(7, "总体人均消费");
 
     private String message;
     private Integer code;
