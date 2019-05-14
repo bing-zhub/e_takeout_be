@@ -8,6 +8,7 @@ import cn.zucc.etakeout.form.OrderDetailQueryForm;
 import cn.zucc.etakeout.form.OrderQueryForm;
 import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.OrderService;
+import cn.zucc.etakeout.service.PushMessageService;
 import cn.zucc.etakeout.util.Converter;
 import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class  ConsumerOrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    PushMessageService pushMessageService;
 
     // 创建订单
     @PostMapping("/create")
@@ -101,6 +105,7 @@ public class  ConsumerOrderController {
         if(!queryForm.getOpenId().equals(orderDTO.getConsumerOpenid())){
             throw new SellException(ResultMapping.PERMISSION_DENIED);
         }
+        pushMessageService.orderStatusUpdate(orderDTO);
         return ResultUtil.success(orderService.finish(orderDTO));
     }
 }

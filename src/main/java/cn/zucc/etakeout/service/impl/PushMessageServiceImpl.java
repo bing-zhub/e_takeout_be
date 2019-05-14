@@ -26,14 +26,14 @@ public class PushMessageServiceImpl implements PushMessageService {
     @Override
     public void orderStatusUpdate(OrderDTO orderDTO) {
         WxMpTemplateMessage templateMessage = new WxMpTemplateMessage();
-        templateMessage.setTemplateId("RjCjcHui5M1oWfYsida6_UXyg_5PWidjneMBTvBJ5cQ");
-        templateMessage.setToUser("o_w7c5j3aG6ZabilCMPEKm7XDiFg");
+        templateMessage.setTemplateId("");
+        templateMessage.setToUser(orderDTO.getConsumerOpenid());
         List<WxMpTemplateData> data = Arrays.asList(
                 new WxMpTemplateData("first", "请及时收货"),
                 new WxMpTemplateData("keyword1", "微信"),
-                new WxMpTemplateData("keyword2", "17376501924"),
+                new WxMpTemplateData("keyword2", orderDTO.getConsumerPhone()),
                 new WxMpTemplateData("keyword3", orderDTO.getOrderId()),
-                new WxMpTemplateData("keyword4", "已支付"),
+                new WxMpTemplateData("keyword4", orderDTO.getOrderStatus() + ""),
                 new WxMpTemplateData("keyword5", orderDTO.getOrderAmount() + "元"),
                 new WxMpTemplateData("remark", "Thank you")
         );
