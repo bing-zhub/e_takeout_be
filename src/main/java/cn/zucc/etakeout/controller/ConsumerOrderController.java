@@ -59,7 +59,7 @@ public class  ConsumerOrderController {
 
     // 订单列表
     @PostMapping("/list")
-    public RootData<List<OrderDTO>> list(@RequestBody @Valid OrderQueryForm queryForm, BindingResult bindingResult){
+    public RootData list(@RequestBody @Valid OrderQueryForm queryForm, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
@@ -71,7 +71,7 @@ public class  ConsumerOrderController {
 
     // 订单详情
     @PostMapping("/detail")
-    public RootData<OrderDTO> detail(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
+    public RootData detail(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }

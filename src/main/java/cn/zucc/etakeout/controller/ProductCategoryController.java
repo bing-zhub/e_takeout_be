@@ -37,7 +37,6 @@ public class ProductCategoryController {
     }
     @PostMapping("/create")
     public RootData create(@RequestBody @Valid CategoryCreateForm categoryCreateForm){
-
         ProductCategory productCategory=productCategoryService.addProductCategory(categoryCreateForm.getCategoryName(),categoryCreateForm.getCategoryType());
         return ResultUtil.success(productCategory);
     }
