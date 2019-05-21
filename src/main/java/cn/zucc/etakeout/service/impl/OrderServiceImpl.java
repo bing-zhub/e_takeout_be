@@ -14,6 +14,7 @@ import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.OrderService;
 import cn.zucc.etakeout.service.PayService;
 import cn.zucc.etakeout.service.ProductInfoService;
+import cn.zucc.etakeout.service.WebSocket;
 import cn.zucc.etakeout.util.Converter;
 import cn.zucc.etakeout.util.ValueUtil;
 import org.springframework.beans.BeanUtils;
@@ -47,6 +48,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMasterDAO orderMasterDAO;
+
+    @Autowired
+    private WebSocket webSocket;
 
     @Override
     @Transactional
@@ -90,6 +94,10 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(savedOrder, orderDTO);
         // 去库存
         productInfoService.decreaseStock(cartDTOList);
+
+
+        // 发送websocket
+        webSocket.sendMessage("有新订单");
 
         return orderDTO;
     }

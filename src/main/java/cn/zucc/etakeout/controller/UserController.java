@@ -8,10 +8,7 @@ import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.UserService;
 import cn.zucc.etakeout.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Date ：Created in 2019/4/30 16:33
@@ -49,7 +46,7 @@ public class UserController {
         return ResultUtil.success("admin-token");
     }
 
-    @RequestMapping("/info")
+    @GetMapping("/info")
     public RootData info(){
         UserInfo userInfo = new UserInfo();
         userInfo.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
@@ -59,7 +56,7 @@ public class UserController {
         return ResultUtil.success(userInfo);
     }
 
-    @RequestMapping("/logout")
+    @GetMapping("/logout")
     public RootData logout(){
         return ResultUtil.success("success");
     }

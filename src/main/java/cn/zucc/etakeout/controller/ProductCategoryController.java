@@ -15,10 +15,7 @@ import cn.zucc.etakeout.util.ResultUtil;
 import org.simpleframework.xml.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
@@ -33,12 +30,12 @@ public class ProductCategoryController {
     private ProductInfoService productInfoService;
     private CategoryCreateForm categoryCreateFormForm;
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public RootData list(){
         List<ProductCategory> list=productCategoryService.getAllProductCategory();
         return ResultUtil.success(list);
     }
-    @RequestMapping("/create")
+    @PostMapping("/create")
     public RootData create(@RequestBody @Valid CategoryCreateForm categoryCreateForm){
 
         ProductCategory productCategory=productCategoryService.addProductCategory(categoryCreateForm.getCategoryName(),categoryCreateForm.getCategoryType());

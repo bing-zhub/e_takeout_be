@@ -25,10 +25,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/seller/product")
 public class SellerProductController  {
+
     @Autowired
     private ProductInfoService productInfoService;
+
     @Autowired
     private CategoryService categoryService;
+
+
     @GetMapping("/list")
     public RootData list(){
 
@@ -71,8 +75,7 @@ public class SellerProductController  {
         return ResultUtil.success(productDataList);
     }
 
-    @RequestMapping("/create")
-
+    @PostMapping("/create")
     public RootData addProduct(@RequestBody @Valid ProductCreateForm productCreateForm){
 
         ProductInfo productInfo=new ProductInfo();
@@ -82,27 +85,16 @@ public class SellerProductController  {
     }
 
     @PostMapping("/delete")
-
     public RootData deleteProduct(@RequestBody @Valid ProductForm productForm){
          ProductInfo productInfo= productInfoService.delete(productForm.getProductId());
         return ResultUtil.success(productInfo);
     }
+
     @PostMapping("/update")
     public RootData changeProduct(@RequestBody @Valid ProductForm productForm, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
-//        ProductInfo productInfo1=new ProductInfo();
-//        ProductInfo productInfo = productInfoService.findOne(productForm.getProductId());
-//        if (productInfo != null) {
-//
-//            BeanUtils.copyProperties(productForm,productInfo1);
-//            productInfo1.setProductStock(productInfo.getProductStock());
-//            productInfo1.setProductStatus(productInfo.getProductStatus());
-//            productInfoService.save(productInfo1);
-//        } else {
-//            throw new SellException(ResultMapping.PRODUCT_NOT_EXIST);
-//        }
         return ResultUtil.success(productInfoService.update(productForm));
     }
 
