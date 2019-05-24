@@ -7,8 +7,13 @@ import cn.zucc.etakeout.form.LoginForm;
 import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.UserService;
 import cn.zucc.etakeout.util.ResultUtil;
+import cn.zucc.etakeout.util.ValueUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Date ：Created in 2019/4/30 16:33
@@ -21,15 +26,28 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
     // 接收json数据
     @PostMapping("/login")
-    public RootData login(@RequestBody LoginForm loginForm){
+    public RootData login(@RequestBody LoginForm loginForm, HttpServletRequest request) {
         UserInfo userInfo = userService.find(loginForm.getUsername());
         if(userInfo ==null){
             throw new SellException(ResultMapping.NO_USER);
         } else {
             if (userInfo.getPwd().equals(loginForm.getPassword())){
-                return ResultUtil.success("admin-token");
+                String token = ValueUtil.sign(loginForm.getUsername(), request.getRemoteAddr());
+
+                stringRedisTemplate
+                        .opsForValue()
+                        .set(token,
+                                userInfo.getUsername(),
+                                ValueUtil.EXPIRE_TIME,
+                                TimeUnit.MILLISECONDS);
+
+                return ResultUtil.success(token);
             } else {
                 throw new SellException(ResultMapping.UNCOREECT);
             }
@@ -37,13 +55,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public RootData register(@RequestBody LoginForm loginForm){
-        UserInfo userInfo =new UserInfo();
+    public RootData register(@RequestBody LoginForm loginForm, HttpServletRequest request) {
+        UserInfo userInfo = new UserInfo();
         userInfo.setUsername(loginForm.getUsername());
         userInfo.setPwd(loginForm.getPassword());
         userService.register(userInfo);
-
-        return ResultUtil.success("admin-token");
+        String token = ValueUtil.sign(loginForm.getUsername(), request.getRemoteAddr());
+        return ResultUtil.success(token);
     }
 
     @GetMapping("/info")
@@ -57,7 +75,9 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public RootData logout(){
+    public RootData logout(HttpServletRequest request) {
+        String token = request.getHeader("X-Token");
+        stringRedisTemplate.opsForValue().getOperations().delete(token);
         return ResultUtil.success("success");
     }
 }
