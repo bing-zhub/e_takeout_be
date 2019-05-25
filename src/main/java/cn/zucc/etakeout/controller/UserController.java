@@ -43,7 +43,7 @@ public class UserController {
                 stringRedisTemplate
                         .opsForValue()
                         .set(token,
-                                userInfo.getUsername(),
+                                request.getRemoteAddr(),
                                 ValueUtil.EXPIRE_TIME,
                                 TimeUnit.MILLISECONDS);
 

@@ -1,7 +1,9 @@
 package cn.zucc.etakeout.util;
 
 import cn.zucc.etakeout.data.RootData;
+import cn.zucc.etakeout.exception.SellException;
 import cn.zucc.etakeout.mappings.CommonMapping;
+import cn.zucc.etakeout.mappings.ResultMapping;
 
 /**
  * @Date ：Created in 2019/4/29 23:41
@@ -15,6 +17,13 @@ public class ResultUtil {
         rootData.setCode(CommonMapping.SUCCESS.getCode());
         rootData.setMessage(CommonMapping.SUCCESS.getMessage());
         rootData.setData(data);
+        return rootData;
+    }
+
+    public static RootData error(SellException exception) {
+        RootData rootData = new RootData();
+        rootData.setCode(exception.getCode());
+        rootData.setMessage(exception.getMessage());
         return rootData;
     }
 }
