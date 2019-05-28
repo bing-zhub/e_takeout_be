@@ -61,6 +61,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         other.setProductStock(one.getProductStock());
         other.setProductStatus(one.getProductStatus());
         other.setProductSellCount(one.getProductSellCount());
+        other.setCreateTime(one.getCreateTime());
         return productInfoDAO.save(other);
     }
 

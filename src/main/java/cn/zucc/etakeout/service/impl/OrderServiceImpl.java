@@ -78,6 +78,10 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrderId(orderId);
             orderDetailDAO.save(orderDetail);
 
+
+            // 增加销量
+            productInfo.setProductSellCount(productInfo.getProductSellCount()+orderDetail.getProductQuantity());
+
             CartDTO cartDTO = new CartDTO(orderDetail.getProductId(), orderDetail.getProductQuantity());
             cartDTOList.add(cartDTO);
         }

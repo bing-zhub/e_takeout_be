@@ -54,6 +54,7 @@ public class ProductInfo {
 
     @CreatedDate
     private Date createTime;
+
     @LastModifiedDate
     private Date updateTime;
 

@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ResultMapping {
 
-    ORDER_PARAM_ERROR(0),
+    ORDER_PARAM_ERROR(-1),
     PRODUCT_NOT_EXIST(10, "商品不存在"),
     OUT_OF_STOCK(11, "库存不足"),
     ORDER_NOT_EXIST(12, "订单不存在"),

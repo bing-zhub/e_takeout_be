@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pay</title>
+    <title>支付中</title>
 </head>
 <body>
 <script>

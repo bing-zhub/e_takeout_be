@@ -36,6 +36,9 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
         // 客户端获取商品信息等
         interceptorRegistration.excludePathPatterns("/consumer/*");
 
+        // 微信授权等
+        interceptorRegistration.excludePathPatterns("/wechat/*");
+
         super.addInterceptors(registry);
     }
 }

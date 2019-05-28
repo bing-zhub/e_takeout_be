@@ -41,8 +41,7 @@ public class  ConsumerOrderController {
     // 创建订单
     @PostMapping("/create")
     // @Valid会对form中的注解进行检查 结果放入BindingResult
-    public RootData<Map<String, String>> create(@RequestBody @Valid OrderCreateForm orderForm,
-                                                BindingResult bindingResult){
+    public RootData<Map<String, String>> create(@RequestBody @Valid OrderCreateForm orderForm, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
@@ -96,7 +95,7 @@ public class  ConsumerOrderController {
     }
 
     // 完结订单
-    @GetMapping("/finish")
+    @PostMapping("/finish")
     public RootData finish(@RequestBody @Valid OrderDetailQueryForm queryForm, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());

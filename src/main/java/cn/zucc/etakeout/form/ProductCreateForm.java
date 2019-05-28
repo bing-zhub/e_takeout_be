@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 @Data
 public class ProductCreateForm {
@@ -11,7 +12,7 @@ public class ProductCreateForm {
     @JsonProperty("name")
     private String productName;
 
-    @NotEmpty(message = "商品价格必填")
+    @NotNull(message = "商品价格必填")
     @JsonProperty("price")
     private BigDecimal productPrice;
 
@@ -31,13 +32,13 @@ public class ProductCreateForm {
     @JsonProperty("image")
     private String productImages = "http://pr0o6uaio.bkt.clouddn.com/FrWYf-tRZvlKCZJB8SXj4SoMNH94";
 
-    @NotEmpty(message = "商品类别必选")
+    @NotNull(message = "商品类别必选")
     @JsonProperty("type")
     private Integer categoryType;
 
     private Integer productStatus = 0;
 
-    @NotEmpty(message = "商品库存必填")
+    @NotNull(message = "商品库存必填")
     @JsonProperty("stock")
     private Integer productStock;
 }
