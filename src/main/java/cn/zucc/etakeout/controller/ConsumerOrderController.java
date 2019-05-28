@@ -88,7 +88,9 @@ public class  ConsumerOrderController {
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
         OrderDTO orderDTO = orderService.findOne(queryForm.getOrderId());
-        if(!queryForm.getOpenId().equals(orderDTO.getConsumerOpenid())){
+        boolean isUserSelf = queryForm.getOpenId().equals(orderDTO.getConsumerOpenid());
+        boolean isAdmin = queryForm.getOpenId().equals("oKLGx51nBAgA814f3-uZXksVTKJQ");
+        if(!(isAdmin || isUserSelf)){
             throw new SellException(ResultMapping.PERMISSION_DENIED);
         }
         return ResultUtil.success(orderService.cancel(orderDTO));
@@ -101,7 +103,9 @@ public class  ConsumerOrderController {
             throw new SellException(ResultMapping.ORDER_PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
         OrderDTO orderDTO = orderService.findOne(queryForm.getOrderId());
-        if(!queryForm.getOpenId().equals(orderDTO.getConsumerOpenid())){
+        boolean isUserSelf = queryForm.getOpenId().equals(orderDTO.getConsumerOpenid());
+        boolean isAdmin = queryForm.getOpenId().equals("oKLGx51nBAgA814f3-uZXksVTKJQ");
+        if(!(isAdmin || isUserSelf)){
             throw new SellException(ResultMapping.PERMISSION_DENIED);
         }
         pushMessageService.orderStatusUpdate(orderDTO);

@@ -28,13 +28,11 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
         interceptorRegistration.excludePathPatterns("/seller/*");
 
         // 管理端用户登录
-        interceptorRegistration.excludePathPatterns("/user/login");
-
-        // 管理端用户注册
-        interceptorRegistration.excludePathPatterns("/user/register");
+        interceptorRegistration.excludePathPatterns("/user/**");
 
         // 客户端获取商品信息等
-        interceptorRegistration.excludePathPatterns("/consumer/*");
+        interceptorRegistration.excludePathPatterns("/consumer/order/*");
+        interceptorRegistration.excludePathPatterns("/consumer/product/*");
 
         // 微信授权等
         interceptorRegistration.excludePathPatterns("/wechat/*");

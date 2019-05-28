@@ -8,6 +8,7 @@ import cn.zucc.etakeout.mappings.ResultMapping;
 import cn.zucc.etakeout.service.UserService;
 import cn.zucc.etakeout.util.ResultUtil;
 import cn.zucc.etakeout.util.ValueUtil;
+import com.auth0.jwt.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;

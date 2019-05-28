@@ -126,7 +126,6 @@ public class OrderServiceImpl implements OrderService {
     public Page<OrderDTO> findList(String consumerOpenId, Pageable pageable) {
         Page<OrderMaster> orderMasterPage;
         // TODO 如果做后台权限 从这里改 目前写死
-        // TODO 分页没有做 一起获取全部 有点消耗
         if (!consumerOpenId.equals("oKLGx51nBAgA814f3-uZXksVTKJQ")) {
             orderMasterPage = orderMasterDAO.findByConsumerOpenid(consumerOpenId, pageable);
         } else {
@@ -210,6 +209,8 @@ public class OrderServiceImpl implements OrderService {
         if(save==null){
             throw new SellException(ResultMapping.ORDER_STATUS_UPDATE_FAILED);
         }
+
+        webSocket.sendMessage("用户["+orderDTO.getConsumerName()+"]已完成支付");
         return orderDTO;
     }
 
@@ -217,6 +218,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderMaster> findAll() {
         return orderMasterDAO.findAll();
     }
+
     public List<OrderDetail> findDetail(String orderId){
         return  orderDetailDAO.findByOrderId(orderId);
     }
