@@ -24,7 +24,7 @@ public class WechatController {
 
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl) {
-        String url = "http://shaoping.natapp1.cc/wechat/userInfo";
+        String url = "http://api.carwasher.com.cn/wechat/userInfo";
         String result =  wxMpService.oauth2buildAuthorizationUrl(url,
                 WxConsts.OAUTH2_SCOPE_USER_INFO,
                 URLEncoder.encode(returnUrl));
