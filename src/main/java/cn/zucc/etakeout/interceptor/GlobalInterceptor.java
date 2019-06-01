@@ -37,7 +37,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
             throw new SellException(ResultMapping.TOKEN_NOT_FOUND);
         String remoteAddr = stringRedisTemplate.opsForValue().get(token);
         if(remoteAddr == null || remoteAddr.isEmpty() || !remoteAddr.equals(request.getRemoteAddr()))
-            throw new SellException(ResultMapping.TOKEN_NOT_FOUND);
+            throw new SellException(ResultMapping.TOKEN_NOT_MATCH);
 
         return true;
     }
