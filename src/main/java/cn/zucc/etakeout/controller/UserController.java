@@ -35,6 +35,11 @@ public class UserController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @PostMapping("/list")
+    public RootData listSeller(){
+        return ResultUtil.success(userService.listSellers());
+    }
+
     // 接收json数据
     @PostMapping("/login")
     public RootData login(@RequestBody LoginForm loginForm, HttpServletRequest request) {
@@ -91,5 +96,15 @@ public class UserController {
         String token = request.getHeader("X-Token");
         stringRedisTemplate.opsForValue().getOperations().delete(token);
         return ResultUtil.success("success");
+    }
+
+    @PostMapping("/active")
+    public RootData activateUser(@RequestBody Map<String, String> map){
+        return ResultUtil.success(userService.active(map.get("username")));
+    }
+
+    @PostMapping("/deactive")
+    public RootData deactiveUser(@RequestBody Map<String, String> map){
+        return ResultUtil.success(userService.deactive(map.get("username")));
     }
 }

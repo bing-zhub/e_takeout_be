@@ -24,17 +24,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 public class ProductCategoryController {
+
     @Autowired
     private ProductCategoryService productCategoryService;
-    @Autowired
-    private ProductInfoService productInfoService;
-    private CategoryCreateForm categoryCreateFormForm;
 
     @GetMapping("/list")
     public RootData list(){
         List<ProductCategory> list=productCategoryService.getAllProductCategory();
         return ResultUtil.success(list);
     }
+
     @PostMapping("/create")
     public RootData create(@RequestBody @Valid CategoryCreateForm categoryCreateForm){
         ProductCategory productCategory=productCategoryService.addProductCategory(categoryCreateForm.getCategoryName(),categoryCreateForm.getCategoryType());
@@ -57,7 +56,6 @@ public class ProductCategoryController {
 
     @PostMapping("/update")
     public RootData change(@RequestBody CategoryForm categoryForm){
-
         ProductCategory productCategory=productCategoryService.getProductCategory(categoryForm.getCategoryId());
         productCategory.setCategoryName(categoryForm.getCategoryName());
         productCategory.setCategoryType(categoryForm.getCategoryType());

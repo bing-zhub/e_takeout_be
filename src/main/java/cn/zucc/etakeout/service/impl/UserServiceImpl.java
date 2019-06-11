@@ -8,10 +8,14 @@ import cn.zucc.etakeout.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl  implements UserService {
+
     @Autowired
     private UserDAO userDAO;
+
     @Override
     public UserInfo register(UserInfo userInfo) {
         UserInfo one=userDAO.findOne(userInfo.getUsername());
@@ -29,5 +33,24 @@ public class UserServiceImpl  implements UserService {
     @Override
     public UserInfo find(String username) {
         return userDAO.findOne(username);
+    }
+
+    @Override
+    public List<UserInfo> listSellers() {
+        return userDAO.findAllByRole("seller");
+    }
+
+    @Override
+    public UserInfo active(String username) {
+        UserInfo one = userDAO.findOne(username);
+        one.setIntroduction("刚刚被捞回来");
+        return userDAO.save(one);
+    }
+
+    @Override
+    public UserInfo deactive(String username) {
+        UserInfo one = userDAO.findOne(username);
+        one.setIntroduction("disabled");
+        return userDAO.save(one);
     }
 }
