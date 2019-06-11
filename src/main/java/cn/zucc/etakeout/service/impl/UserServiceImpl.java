@@ -14,7 +14,6 @@ public class UserServiceImpl  implements UserService {
     private UserDAO userDAO;
     @Override
     public UserInfo register(UserInfo userInfo) {
-        System.out.println("dsadasdas");
         UserInfo one=userDAO.findOne(userInfo.getUsername());
         if(one==null){
             userDAO.save(userInfo);

@@ -35,7 +35,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
         String token = request.getHeader("X-Token");
         if(token == null || token.isEmpty())
             throw new SellException(ResultMapping.TOKEN_NOT_FOUND);
-        String remoteAddr = stringRedisTemplate.opsForValue().get(token);
+        String info = stringRedisTemplate.opsForValue().get(token);
+        String remoteAddr = info.split(" ")[0];
         if(remoteAddr == null || remoteAddr.isEmpty() || !remoteAddr.equals(request.getRemoteAddr()))
             throw new SellException(ResultMapping.TOKEN_NOT_MATCH);
 

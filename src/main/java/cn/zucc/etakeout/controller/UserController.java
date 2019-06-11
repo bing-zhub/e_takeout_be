@@ -14,6 +14,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,7 +48,7 @@ public class UserController {
                 stringRedisTemplate
                         .opsForValue()
                         .set(token,
-                                request.getRemoteAddr(),
+                                request.getRemoteAddr() + " " + userInfo.getRole() + " " + userInfo.getUsername(),
                                 ValueUtil.EXPIRE_TIME,
                                 TimeUnit.MILLISECONDS);
 
@@ -65,14 +69,21 @@ public class UserController {
         return ResultUtil.success(token);
     }
 
-    @GetMapping("/info")
-    public RootData info(){
-        UserInfo userInfo = new UserInfo();
-        userInfo.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        userInfo.setIntroduction("I am a super administrator");
-        userInfo.setUsername("Super Admin");
-        userInfo.setRole("[admin]");
-        return ResultUtil.success(userInfo);
+    @PostMapping("/info")
+    public RootData info(@RequestBody Map<String, String> map){
+        Map ret = new HashMap();
+        String token = map.get("token");
+        String info = stringRedisTemplate.opsForValue().get(token);
+        String role = info.split(" ")[1];
+        String username = info.split(" ")[2];
+        UserInfo userInfo = userService.find(username);
+        List<String> roles = new LinkedList<>();
+        roles.add(role);
+        ret.put("avatar", userInfo.getAvatar());
+        ret.put("introduction", userInfo.getIntroduction());
+        ret.put("roles", roles);
+        ret.put("username", userInfo.getUsername());
+        return ResultUtil.success(ret);
     }
 
     @GetMapping("/logout")
