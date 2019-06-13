@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Result;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +48,9 @@ public class UserController {
         if(userInfo ==null){
             throw new SellException(ResultMapping.NO_USER);
         } else {
+            if (userInfo.getIntroduction().equals("disabled")){
+                throw new SellException(ResultMapping.USER_DISABLED);
+            }
             if (userInfo.getPwd().equals(loginForm.getPassword())){
                 String token = ValueUtil.sign(loginForm.getUsername(), request.getRemoteAddr());
 

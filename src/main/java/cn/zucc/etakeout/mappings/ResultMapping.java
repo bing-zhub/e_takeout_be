@@ -27,7 +27,8 @@ public enum ResultMapping {
     CATRGORY_TYPE_EXIT(24,"类别编号已经存在"),
     CATRGORY_TYPE_NO(27,"类别编号不存在"),
     CATEGORY_PRODUCT_EXIT(28,"该类别还有商品存在"),
-    TOKEN_NOT_FOUND(29, "权限检查出错, 请重试"), TOKEN_NOT_MATCH(30, "TOKEN不匹配" );
+    TOKEN_NOT_FOUND(29, "权限检查出错, 请重试"), TOKEN_NOT_MATCH(30, "TOKEN不匹配" ),
+    USER_DISABLED(31, "用户已被禁用" );
     private Integer code;
 
     private String message;
