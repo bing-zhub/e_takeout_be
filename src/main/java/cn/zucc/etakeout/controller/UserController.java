@@ -80,7 +80,7 @@ public class UserController {
 
     @PostMapping("/info")
     public RootData info(@RequestBody Map<String, String> map){
-        Map ret = new HashMap();
+        Map<String, Object> ret = new HashMap();
         String token = map.get("token");
         String info = stringRedisTemplate.opsForValue().get(token);
         String role = info.split(" ")[1];

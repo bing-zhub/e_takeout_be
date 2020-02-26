@@ -24,7 +24,6 @@ public class UserServiceImpl  implements UserService {
         }
         else{
             throw new SellException(ResultMapping.REGIST_FAILED);
-
         }
 
         return userInfo;

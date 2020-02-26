@@ -33,7 +33,7 @@ public class ApiConfig {
     private ApiInfo apiInfo() {
         return new ApiInfo(
                 "基于Spring Boot的微信电商应用",
-                "使用Spring Boot开发后盾, Vue开发买家端与买家端, 使用Restful进行交互",
+                "使用Spring Boot开发后端, Vue开发买家端与买家端, 使用Restful进行交互",
                 "API V0.1",
                 "#",
                 new Contact("Bing", "https://github.com/bing-zhub", "bing.zhub@gmail.com"),

@@ -1,0 +1,48 @@
+= 基于Spring Boot的微信电商应用
+
+
+[[_overview]]
+== Overview
+使用Spring Boot开发后端, Vue开发买家端与买家端, 使用Restful进行交互
+
+
+=== Version information
+[%hardbreaks]
+__Version__ : API V0.1
+
+
+=== Contact information
+[%hardbreaks]
+__Contact__ : Bing
+__Contact Email__ : bing.zhub@gmail.com
+
+
+=== License information
+[%hardbreaks]
+__License__ : Apache
+__License URL__ : http://www.apache.org/
+__Terms of service__ : #
+
+
+=== URI scheme
+[%hardbreaks]
+__Host__ : localhost:8080
+__BasePath__ : /
+
+
+=== Tags
+
+* basic-error-controller : Basic Error Controller
+* consumer-order-controller : Consumer Order Controller
+* consumer-product-controller : Consumer Product Controller
+* pay-controller : Pay Controller
+* product-category-controller : Product Category Controller
+* qiniu-controller : Qiniu Controller
+* seller-controller : Seller Controller
+* seller-product-controller : Seller Product Controller
+* static-controller : Static Controller
+* user-controller : User Controller
+* wechat-controller : Wechat Controller
+
+
+

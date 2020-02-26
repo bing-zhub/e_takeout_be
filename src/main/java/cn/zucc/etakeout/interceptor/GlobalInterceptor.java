@@ -30,15 +30,15 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        url = request.getServletPath();
-        start = System.currentTimeMillis();
-        String token = request.getHeader("X-Token");
-        if(token == null || token.isEmpty())
-            throw new SellException(ResultMapping.TOKEN_NOT_FOUND);
-        String info = stringRedisTemplate.opsForValue().get(token);
-        String remoteAddr = info.split(" ")[0];
-        if(remoteAddr == null || remoteAddr.isEmpty() || !remoteAddr.equals(request.getRemoteAddr()))
-            throw new SellException(ResultMapping.TOKEN_NOT_MATCH);
+//        url = request.getServletPath();
+//        start = System.currentTimeMillis();
+//        String token = request.getHeader("X-Token");
+//        if(token == null || token.isEmpty())
+//            throw new SellException(ResultMapping.TOKEN_NOT_FOUND);
+//        String info = stringRedisTemplate.opsForValue().get(token);
+//        String remoteAddr = info.split(" ")[0];
+//        if(remoteAddr == null || remoteAddr.isEmpty() || !remoteAddr.equals(request.getRemoteAddr()))
+//            throw new SellException(ResultMapping.TOKEN_NOT_MATCH);
 
         return true;
     }
@@ -50,7 +50,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        Long diff = System.currentTimeMillis() - start;
-        System.out.println("["+ request.getMethod() +" "+ url + "]: cost " + diff +"ms");
+//        Long diff = System.currentTimeMillis() - start;
+//        System.out.println("["+ request.getMethod() +" "+ url + "]: cost " + diff +"ms");
     }
 }
